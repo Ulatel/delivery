@@ -31,7 +31,7 @@ export default function(){
                     display: { xs: 'none', md: 'unset' },
 
                 };
-            }}>Eat Catalog</Button>}
+            }}>Delivery.Кушац</Button>}
             profile={window.SuperGlobal.auth[0] && 
             <Button key={'profile'} component={Link} variant='outline' to='/profile' sx={() => {
                 return { backgroundColor: location.pathname == '/profile' ? grey[800] : '' };
