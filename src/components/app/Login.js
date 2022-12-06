@@ -4,7 +4,7 @@ import errorParser from "../../utils/errorParser";
 import { useSnackbar } from "notistack";
 import { Box } from "@mui/system";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Input, Paper } from "@mui/material";
+import { Button, Input, Paper, Typography } from "@mui/material";
 
 import _ from '../../../config';
 
@@ -19,12 +19,13 @@ export default function({ }){
     return <>
         <Paper elevation={2} sx={{ padding: 2 }}>
             <form>
+                
+                <Typography sx={(theme) => theme.palette.pages.main.H3}>Авторизация</Typography>
                 <Input required placeholder='Login' type='text' value={login} onChange={(e) => setLogin(e.target.value)} fullWidth />
                 <Box sx={{ height: '0.5em' }} />
                 <Input required placeholder='Password' type='password' value={pass} onChange={(e) => setPass(e.target.value)} fullWidth />
                 
                 <Box sx={{ height: '1.5em' }} />
-                
                 <Button variant='contained' type='submit' sx={{ marginRight: '0.25em' }} onClick={(e) => {
                     e.preventDefault();
                     
@@ -51,7 +52,6 @@ export default function({ }){
                         enqueueSnackbar(err.message, { variant: 'error' });
                     });
                 }}>Войти</Button>
-                <Button component={Link} to='/registration' variant='contained' color='secondary'>Зарегистрироваться</Button>
             </form>
         </Paper>
     </>;

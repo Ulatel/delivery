@@ -20,7 +20,9 @@ export default function(prefersDarkMode){
             light: "#abffbb",
             main: "#00ffbb",
             dark: "#ffffbb",
-            
+            primary: {
+                main: "#00AA00",
+            },
             text: {
                 primary: mode ? '#eee' : '#fff',
             },
@@ -42,6 +44,11 @@ export default function(prefersDarkMode){
                         },
                     },
                     
+                    H3: {
+                        fontSize: 24,
+                        marginBottom: 2
+                    },
+
                     Hamburger:{
                         icon: {
                             mr: 2,
@@ -245,7 +252,7 @@ export default function(prefersDarkMode){
             },
             
             background: {
-                paper: prefersDarkMode ? '#121212' : '#ccc',
+                paper: prefersDarkMode ? '#121212' : '#fff',
             },
         },
     };
