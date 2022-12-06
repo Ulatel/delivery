@@ -5,6 +5,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ModeNight from "@mui/icons-material/ModeNight";
 import Brightness4 from '@mui/icons-material/Brightness4';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { useSnackbar } from "notistack";
 import { grey } from "@mui/material/colors";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -31,7 +32,7 @@ export default function(){
 
                 };
             }}>Eat Catalog</Button>}
-            logined={window.SuperGlobal.auth[0] && 
+            profile={window.SuperGlobal.auth[0] && 
             <Button key={'profile'} component={Link} variant='outline' to='/profile' sx={() => {
                 return { backgroundColor: location.pathname == '/profile' ? grey[800] : '' };
             }}>{nick}</Button>}
@@ -44,8 +45,13 @@ export default function(){
                         nav('/');
                     })
                 }}><LogoutIcon /></IconButton> :
-                <IconButton component={Link} variant='outline' to='/login' edge='end'><LoginIcon /></IconButton>
-            }
+                <>
+                    <IconButton key={'registration'} component={Link} variant='outline' to='/registration' sx={() => {
+                        return { backgroundColor: location.pathname == '/registration' ? grey[800] : '' };
+                    }}><PersonAddAltIcon/></IconButton>
+                    <IconButton component={Link} variant='outline' to='/login' edge='end'><LoginIcon /></IconButton>
+                </>
+                }
             themeButton={
                 <IconButton onClick={(e) => {
                     e.preventDefault();

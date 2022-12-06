@@ -39,8 +39,8 @@ $(function(){//сразу после загрузки страницы из-за
         const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');//спрашивает у браузера
         const theme = React.useMemo(() => createTheme(style(window.SuperGlobal.darkMode[1] || prefersDarkMode)), [prefersDarkMode, window.SuperGlobal.darkMode[0]]);//устанавливает
         
-        window.SuperGlobal.auth =  useState(true);//аутентификация
-        //window.SuperGlobal.auth = useState(localStorage.getItem('movieToken') ? true : false);//аутентификация
+        //window.SuperGlobal.auth =  useState(true);//аутентификация
+        window.SuperGlobal.auth = useState(localStorage.getItem('movieToken') ? true : false);//аутентификация
         window.SuperGlobal.syncProfile = useState({});
         
         useMemo(() => {
