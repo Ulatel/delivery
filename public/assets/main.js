@@ -8632,252 +8632,6 @@ const toolbarClasses = (0,_mui_utils__WEBPACK_IMPORTED_MODULE_1__["default"])('M
 
 /***/ }),
 
-/***/ "./node_modules/@mui/material/esm/Typography/Typography.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/@mui/material/esm/Typography/Typography.js ***!
-  \*****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "TypographyRoot": () => (/* binding */ TypographyRoot),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutPropertiesLoose__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/helpers/esm/objectWithoutPropertiesLoose */ "./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js");
-/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime/helpers/esm/extends */ "./node_modules/@babel/runtime/helpers/esm/extends.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! clsx */ "./node_modules/clsx/dist/clsx.m.js");
-/* harmony import */ var _mui_system__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @mui/system */ "./node_modules/@mui/system/esm/styleFunctionSx/extendSxProp.js");
-/* harmony import */ var _mui_base__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @mui/base */ "./node_modules/@mui/utils/esm/composeClasses/composeClasses.js");
-/* harmony import */ var _styles_styled__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../styles/styled */ "./node_modules/@mui/material/esm/styles/styled.js");
-/* harmony import */ var _styles_useThemeProps__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../styles/useThemeProps */ "./node_modules/@mui/material/esm/styles/useThemeProps.js");
-/* harmony import */ var _utils_capitalize__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils/capitalize */ "./node_modules/@mui/material/esm/utils/capitalize.js");
-/* harmony import */ var _typographyClasses__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./typographyClasses */ "./node_modules/@mui/material/esm/Typography/typographyClasses.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
-
-const _excluded = ["align", "className", "component", "gutterBottom", "noWrap", "paragraph", "variant", "variantMapping"];
-
-
-
-
-
-
-
-
-
-
-const useUtilityClasses = ownerState => {
-  const {
-    align,
-    gutterBottom,
-    noWrap,
-    paragraph,
-    variant,
-    classes
-  } = ownerState;
-  const slots = {
-    root: ['root', variant, ownerState.align !== 'inherit' && `align${(0,_utils_capitalize__WEBPACK_IMPORTED_MODULE_5__["default"])(align)}`, gutterBottom && 'gutterBottom', noWrap && 'noWrap', paragraph && 'paragraph']
-  };
-  return (0,_mui_base__WEBPACK_IMPORTED_MODULE_6__["default"])(slots, _typographyClasses__WEBPACK_IMPORTED_MODULE_7__.getTypographyUtilityClass, classes);
-};
-const TypographyRoot = (0,_styles_styled__WEBPACK_IMPORTED_MODULE_8__["default"])('span', {
-  name: 'MuiTypography',
-  slot: 'Root',
-  overridesResolver: (props, styles) => {
-    const {
-      ownerState
-    } = props;
-    return [styles.root, ownerState.variant && styles[ownerState.variant], ownerState.align !== 'inherit' && styles[`align${(0,_utils_capitalize__WEBPACK_IMPORTED_MODULE_5__["default"])(ownerState.align)}`], ownerState.noWrap && styles.noWrap, ownerState.gutterBottom && styles.gutterBottom, ownerState.paragraph && styles.paragraph];
-  }
-})(({
-  theme,
-  ownerState
-}) => (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__["default"])({
-  margin: 0
-}, ownerState.variant && theme.typography[ownerState.variant], ownerState.align !== 'inherit' && {
-  textAlign: ownerState.align
-}, ownerState.noWrap && {
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap'
-}, ownerState.gutterBottom && {
-  marginBottom: '0.35em'
-}, ownerState.paragraph && {
-  marginBottom: 16
-}));
-const defaultVariantMapping = {
-  h1: 'h1',
-  h2: 'h2',
-  h3: 'h3',
-  h4: 'h4',
-  h5: 'h5',
-  h6: 'h6',
-  subtitle1: 'h6',
-  subtitle2: 'h6',
-  body1: 'p',
-  body2: 'p',
-  inherit: 'p'
-};
-
-// TODO v6: deprecate these color values in v5.x and remove the transformation in v6
-const colorTransformations = {
-  primary: 'primary.main',
-  textPrimary: 'text.primary',
-  secondary: 'secondary.main',
-  textSecondary: 'text.secondary',
-  error: 'error.main'
-};
-const transformDeprecatedColors = color => {
-  return colorTransformations[color] || color;
-};
-const Typography = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.forwardRef(function Typography(inProps, ref) {
-  const themeProps = (0,_styles_useThemeProps__WEBPACK_IMPORTED_MODULE_9__["default"])({
-    props: inProps,
-    name: 'MuiTypography'
-  });
-  const color = transformDeprecatedColors(themeProps.color);
-  const props = (0,_mui_system__WEBPACK_IMPORTED_MODULE_10__["default"])((0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__["default"])({}, themeProps, {
-    color
-  }));
-  const {
-      align = 'inherit',
-      className,
-      component,
-      gutterBottom = false,
-      noWrap = false,
-      paragraph = false,
-      variant = 'body1',
-      variantMapping = defaultVariantMapping
-    } = props,
-    other = (0,_babel_runtime_helpers_esm_objectWithoutPropertiesLoose__WEBPACK_IMPORTED_MODULE_0__["default"])(props, _excluded);
-  const ownerState = (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__["default"])({}, props, {
-    align,
-    color,
-    className,
-    component,
-    gutterBottom,
-    noWrap,
-    paragraph,
-    variant,
-    variantMapping
-  });
-  const Component = component || (paragraph ? 'p' : variantMapping[variant] || defaultVariantMapping[variant]) || 'span';
-  const classes = useUtilityClasses(ownerState);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(TypographyRoot, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__["default"])({
-    as: Component,
-    ref: ref,
-    ownerState: ownerState,
-    className: (0,clsx__WEBPACK_IMPORTED_MODULE_3__["default"])(classes.root, className)
-  }, other));
-});
- true ? Typography.propTypes /* remove-proptypes */ = {
-  // ----------------------------- Warning --------------------------------
-  // | These PropTypes are generated from the TypeScript type definitions |
-  // |     To update them edit the d.ts file and run "yarn proptypes"     |
-  // ----------------------------------------------------------------------
-  /**
-   * Set the text-align on the component.
-   * @default 'inherit'
-   */
-  align: prop_types__WEBPACK_IMPORTED_MODULE_11___default().oneOf(['center', 'inherit', 'justify', 'left', 'right']),
-  /**
-   * The content of the component.
-   */
-  children: (prop_types__WEBPACK_IMPORTED_MODULE_11___default().node),
-  /**
-   * Override or extend the styles applied to the component.
-   */
-  classes: (prop_types__WEBPACK_IMPORTED_MODULE_11___default().object),
-  /**
-   * @ignore
-   */
-  className: (prop_types__WEBPACK_IMPORTED_MODULE_11___default().string),
-  /**
-   * The component used for the root node.
-   * Either a string to use a HTML element or a component.
-   */
-  component: (prop_types__WEBPACK_IMPORTED_MODULE_11___default().elementType),
-  /**
-   * If `true`, the text will have a bottom margin.
-   * @default false
-   */
-  gutterBottom: (prop_types__WEBPACK_IMPORTED_MODULE_11___default().bool),
-  /**
-   * If `true`, the text will not wrap, but instead will truncate with a text overflow ellipsis.
-   *
-   * Note that text overflow can only happen with block or inline-block level elements
-   * (the element needs to have a width in order to overflow).
-   * @default false
-   */
-  noWrap: (prop_types__WEBPACK_IMPORTED_MODULE_11___default().bool),
-  /**
-   * If `true`, the element will be a paragraph element.
-   * @default false
-   */
-  paragraph: (prop_types__WEBPACK_IMPORTED_MODULE_11___default().bool),
-  /**
-   * The system prop that allows defining system overrides as well as additional CSS styles.
-   */
-  sx: prop_types__WEBPACK_IMPORTED_MODULE_11___default().oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_11___default().arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_11___default().oneOfType([(prop_types__WEBPACK_IMPORTED_MODULE_11___default().func), (prop_types__WEBPACK_IMPORTED_MODULE_11___default().object), (prop_types__WEBPACK_IMPORTED_MODULE_11___default().bool)])), (prop_types__WEBPACK_IMPORTED_MODULE_11___default().func), (prop_types__WEBPACK_IMPORTED_MODULE_11___default().object)]),
-  /**
-   * Applies the theme typography styles.
-   * @default 'body1'
-   */
-  variant: prop_types__WEBPACK_IMPORTED_MODULE_11___default().oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_11___default().oneOf(['body1', 'body2', 'button', 'caption', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'inherit', 'overline', 'subtitle1', 'subtitle2']), (prop_types__WEBPACK_IMPORTED_MODULE_11___default().string)]),
-  /**
-   * The component maps the variant prop to a range of different HTML element types.
-   * For instance, subtitle1 to `<h6>`.
-   * If you wish to change that mapping, you can provide your own.
-   * Alternatively, you can use the `component` prop.
-   * @default {
-   *   h1: 'h1',
-   *   h2: 'h2',
-   *   h3: 'h3',
-   *   h4: 'h4',
-   *   h5: 'h5',
-   *   h6: 'h6',
-   *   subtitle1: 'h6',
-   *   subtitle2: 'h6',
-   *   body1: 'p',
-   *   body2: 'p',
-   *   inherit: 'p',
-   * }
-   */
-  variantMapping: (prop_types__WEBPACK_IMPORTED_MODULE_11___default().object)
-} : 0;
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Typography);
-
-/***/ }),
-
-/***/ "./node_modules/@mui/material/esm/Typography/typographyClasses.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/@mui/material/esm/Typography/typographyClasses.js ***!
-  \************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
-/* harmony export */   "getTypographyUtilityClass": () => (/* binding */ getTypographyUtilityClass)
-/* harmony export */ });
-/* harmony import */ var _mui_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @mui/utils */ "./node_modules/@mui/utils/esm/generateUtilityClasses/generateUtilityClasses.js");
-/* harmony import */ var _generateUtilityClass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../generateUtilityClass */ "./node_modules/@mui/utils/esm/generateUtilityClass/generateUtilityClass.js");
-
-
-function getTypographyUtilityClass(slot) {
-  return (0,_generateUtilityClass__WEBPACK_IMPORTED_MODULE_0__["default"])('MuiTypography', slot);
-}
-const typographyClasses = (0,_mui_utils__WEBPACK_IMPORTED_MODULE_1__["default"])('MuiTypography', ['root', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'subtitle1', 'subtitle2', 'body1', 'body2', 'inherit', 'button', 'caption', 'overline', 'alignLeft', 'alignRight', 'alignCenter', 'alignJustify', 'noWrap', 'gutterBottom', 'paragraph']);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (typographyClasses);
-
-/***/ }),
-
 /***/ "./node_modules/@mui/material/esm/colors/blue.js":
 /*!*******************************************************!*\
   !*** ./node_modules/@mui/material/esm/colors/blue.js ***!
@@ -20190,11 +19944,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_icons_material_ModeNight__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @mui/icons-material/ModeNight */ "./node_modules/@mui/icons-material/ModeNight.js");
 /* harmony import */ var _mui_icons_material_Brightness4__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @mui/icons-material/Brightness4 */ "./node_modules/@mui/icons-material/Brightness4.js");
 /* harmony import */ var notistack__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! notistack */ "./node_modules/notistack/dist/notistack.esm.js");
-/* harmony import */ var _mui_material_colors__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @mui/material/colors */ "./node_modules/@mui/material/esm/colors/grey.js");
+/* harmony import */ var _mui_material_colors__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @mui/material/colors */ "./node_modules/@mui/material/esm/colors/grey.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @mui/material */ "./node_modules/@mui/material/esm/Button/Button.js");
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @mui/material */ "./node_modules/@mui/material/esm/Typography/Typography.js");
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @mui/material */ "./node_modules/@mui/material/esm/IconButton/IconButton.js");
 /* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../config */ "./config.js");
 
@@ -20236,7 +19989,17 @@ __webpack_require__.r(__webpack_exports__);
         };
       }
     }, "Eat Catalog"),
-    logined: window.SuperGlobal.auth[0] && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__["default"], null, "\u0410\u0432\u0442\u043E\u0440\u0438\u0437\u043E\u0432\u0430\u043D \u043A\u0430\u043A \u2014 ", nick),
+    logined: window.SuperGlobal.auth[0] && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      key: 'profile',
+      component: react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link,
+      variant: "outline",
+      to: "/profile",
+      sx: () => {
+        return {
+          backgroundColor: location.pathname == '/profile' ? _mui_material_colors__WEBPACK_IMPORTED_MODULE_9__["default"][800] : ''
+        };
+      }
+    }, nick),
     loginButton: window.SuperGlobal.auth[0] ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__["default"], {
       variant: "outline",
       edge: "end",
@@ -20265,27 +20028,37 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     }, window.SuperGlobal.darkMode[0] ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_mui_icons_material_Brightness4__WEBPACK_IMPORTED_MODULE_13__["default"], null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_mui_icons_material_ModeNight__WEBPACK_IMPORTED_MODULE_14__["default"], null))
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((react__WEBPACK_IMPORTED_MODULE_1___default().Fragment), null, window.SuperGlobal.auth[0] && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((react__WEBPACK_IMPORTED_MODULE_1___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    key: 'favorites',
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((react__WEBPACK_IMPORTED_MODULE_1___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    key: 'menu',
     component: react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link,
     variant: "outline",
-    to: "/favorites",
+    to: "/menu",
     sx: () => {
       return {
-        backgroundColor: location.pathname == '/favorites' ? _mui_material_colors__WEBPACK_IMPORTED_MODULE_15__["default"][800] : ''
+        backgroundColor: location.pathname == '/menu' ? _mui_material_colors__WEBPACK_IMPORTED_MODULE_9__["default"][800] : ''
       };
     }
-  }, "\u0418\u0437\u0431\u0440\u0430\u043D\u043E\u0435"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    key: 'profile',
+  }, "\u041C\u0435\u043D\u044E"), window.SuperGlobal.auth[0] && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((react__WEBPACK_IMPORTED_MODULE_1___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    key: 'orders',
     component: react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link,
     variant: "outline",
-    to: "/profile",
+    to: "/orders",
     sx: () => {
       return {
-        backgroundColor: location.pathname == '/profile' ? _mui_material_colors__WEBPACK_IMPORTED_MODULE_15__["default"][800] : ''
+        backgroundColor: location.pathname == '/orders' ? _mui_material_colors__WEBPACK_IMPORTED_MODULE_9__["default"][800] : ''
       };
     }
-  }, "\u041C\u043E\u0439 \u043F\u0440\u043E\u0444\u0438\u043B\u044C")))));
+  }, "\u0417\u0430\u043A\u0430\u0437\u044B"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    key: 'basket',
+    component: react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link,
+    variant: "outline",
+    to: "/basket",
+    sx: () => {
+      return {
+        backgroundColor: location.pathname == '/basket' ? _mui_material_colors__WEBPACK_IMPORTED_MODULE_9__["default"][800] : ''
+      };
+    }
+  }, "\u041A\u043E\u0440\u0437\u0438\u043D\u0430")))));
 }
 
 /***/ }),
@@ -20537,7 +20310,15 @@ window.SuperGlobal = window.SuperGlobal || {}; //шлобальное состо
 
 jquery__WEBPACK_IMPORTED_MODULE_2___default()(function () {
   //сразу после загрузки страницы из-за $
-
+  jquery__WEBPACK_IMPORTED_MODULE_2___default().fn.extend({
+    //для анимации (ставит ксс анимацию в очередь)
+    qcss: function (css) {
+      return jquery__WEBPACK_IMPORTED_MODULE_2___default()(this).queue(function (next) {
+        jquery__WEBPACK_IMPORTED_MODULE_2___default()(this).css(css);
+        next();
+      });
+    }
+  });
   function App({}) {
     //начало приложнеия
     window.SuperGlobal.darkMode = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(localStorage.getItem('theme') ?? false); //состояние темы
@@ -20545,14 +20326,16 @@ jquery__WEBPACK_IMPORTED_MODULE_2___default()(function () {
     const prefersDarkMode = (0,_mui_material__WEBPACK_IMPORTED_MODULE_10__["default"])('(prefers-color-scheme: dark)'); //спрашивает у браузера
     const theme = react__WEBPACK_IMPORTED_MODULE_1___default().useMemo(() => (0,_mui_material_styles__WEBPACK_IMPORTED_MODULE_11__["default"])((0,_theme__WEBPACK_IMPORTED_MODULE_3__["default"])(window.SuperGlobal.darkMode[1] || prefersDarkMode)), [prefersDarkMode, window.SuperGlobal.darkMode[0]]); //устанавливает
 
-    window.SuperGlobal.auth = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(localStorage.getItem('movieToken') ? true : false); //аутентификация
+    window.SuperGlobal.auth = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true); //аутентификация
+    //window.SuperGlobal.auth = useState(localStorage.getItem('movieToken') ? true : false);//аутентификация
     window.SuperGlobal.syncProfile = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({});
     (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => {
       if (window.SuperGlobal.auth[0]) {
         window.SuperGlobal.token = localStorage.getItem('movieToken');
-        window.SuperGlobal.profile = (0,_utils_fetchData__WEBPACK_IMPORTED_MODULE_4__["default"])(new URL(`/api/account/profile`, _config__WEBPACK_IMPORTED_MODULE_8__["default"].api_server), {}, 'GET').catch(() => {
-          //enqueueSnackbar(e.message, { variant: 'error' });
-        });
+        //window.SuperGlobal.profile = fetchData(new URL(`/api/account/profile`, _.api_server), {}, 'GET').catch(() => {
+        //enqueueSnackbar(e.message, { variant: 'error' });
+        //});
+
         (async () => {
           window.SuperGlobal.syncProfile[1](await window.SuperGlobal.profile);
         })();
@@ -84958,10 +84741,10 @@ function combine (array, callback) {
 /******/ 	__webpack_require__("./src/utils/errorParser.js");
 /******/ 	__webpack_require__("./src/utils/fetchData.js");
 /******/ 	__webpack_require__("./src/utils/react_children_wrap.js");
+/******/ 	__webpack_require__("./src/components/pages/Index.js");
 /******/ 	__webpack_require__("./src/components/app/Header.js");
 /******/ 	__webpack_require__("./src/components/app/Login.js");
-/******/ 	__webpack_require__("./src/components/app/ThemeInvetor.js");
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/components/pages/Index.js");
+/******/ 	var __webpack_exports__ = __webpack_require__("./src/components/app/ThemeInvetor.js");
 /******/ 	
 /******/ })()
 ;

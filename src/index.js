@@ -22,6 +22,14 @@ const pages = (ctx => {
 window.SuperGlobal = window.SuperGlobal || {};//шлобальное состофяние, например для аутентификации, можно заменить редуксом
 
 $(function(){//сразу после загрузки страницы из-за $
+    $.fn.extend({//для анимации (ставит ксс анимацию в очередь)
+        qcss: function(css) {
+            return $(this).queue(function(next) {
+                $(this).css(css);
+                next();
+            });
+        }
+    });
 
     function App({ }){//начало приложнеия
         window.SuperGlobal.darkMode = useState(localStorage.getItem('theme') ?? false);//состояние темы
@@ -29,15 +37,16 @@ $(function(){//сразу после загрузки страницы из-за
         const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');//спрашивает у браузера
         const theme = React.useMemo(() => createTheme(style(window.SuperGlobal.darkMode[1] || prefersDarkMode)), [prefersDarkMode, window.SuperGlobal.darkMode[0]]);//устанавливает
         
-        window.SuperGlobal.auth = useState(localStorage.getItem('movieToken') ? true : false);//аутентификация
+        window.SuperGlobal.auth =  useState(true);//аутентификация
+        //window.SuperGlobal.auth = useState(localStorage.getItem('movieToken') ? true : false);//аутентификация
         window.SuperGlobal.syncProfile = useState({});
         
         useMemo(() => {
             if (window.SuperGlobal.auth[0]){
                 window.SuperGlobal.token = localStorage.getItem('movieToken');
-                window.SuperGlobal.profile = fetchData(new URL(`/api/account/profile`, _.api_server), {}, 'GET').catch(() => {
+                //window.SuperGlobal.profile = fetchData(new URL(`/api/account/profile`, _.api_server), {}, 'GET').catch(() => {
                     //enqueueSnackbar(e.message, { variant: 'error' });
-                });
+                //});
                 
                 (async () => {
                     window.SuperGlobal.syncProfile[1](await window.SuperGlobal.profile);
