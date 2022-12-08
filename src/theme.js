@@ -45,6 +45,7 @@ export default function(prefersDarkMode){
                     },
                     
                     H3: {
+                        color:  mode ? '#eee' : '#fff',
                         fontSize: 24,
                         marginBottom: 2
                     },
