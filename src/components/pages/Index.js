@@ -1,14 +1,17 @@
 import React, {useEffect, useState } from "react";
 import Header from '../app/Header';
 import Card from '../app/Card';
-import PaginationRounded from '../app/Pagination';
+import PaginationRounded from '../Pagination';
+import FilterSelect from '../Sort';
+import LimitTags from '../Filter';
 import { Box } from '@mui/material';
 import { useParams } from "react-router-dom";
 import fetchData from "../../utils/fetchData";
 import errorParser from "../../utils/errorParser";
 import { useSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
-
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 
 import "../../less/pages/main.less";
 
@@ -18,6 +21,7 @@ export default function({ }){
     const { id } = useParams();
     const [ currPage, setCurrPage ] = useState(id ?? 1);
     const [ pageCount, setPageCount ] = useState(1);
+    const [ filters, setFilters ] = useState("");
     const [ children, setChildren ] = useState([]);
     const [ isNull, setNull ] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
@@ -30,7 +34,7 @@ export default function({ }){
         (async () => {
             let json;
             try{
-            json = await fetchData((new URL(`/api/dish/?page=${currPage}`, _.api_server)), {}, 'GET');
+            json = await fetchData((new URL(`/api/dish/?page=${currPage}${filters}`, _.api_server)), {}, 'GET');
             }
             catch(e){
                 enqueueSnackbar(e.message, {variant:'error'})
@@ -80,11 +84,16 @@ export default function({ }){
                     />;
             }));
         })();
-    }, [currPage]);
+    }, [currPage, filters]);
 
     return <>
         <Box sx={(theme) => theme.palette.pages.main.Main.bg}>
             <Header/>
+            <Box sx={{display: "flex",flexWrap: "wrap", gap: 2, flexFlow: "row wrap", alignItems: "stretch", justifyContent: "center"}}>
+                <LimitTags/>
+                <FilterSelect/>
+                <FormControlLabel control={<Switch/>} label="Вегетарианское" sx={{color: "grey",  minWidth: 150 }}/>
+            </Box>
             <Box padding={2} sx={{display: "flex", flexWrap: "wrap", gap: 2, flexFlow: "row wrap", alignItems: "stretch", justifyContent: "center"}}>
                 
                 { children
