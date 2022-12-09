@@ -1,7 +1,7 @@
 import React, {useEffect, useState } from "react";
 import Header from '../app/Header';
 import Card from '../app/Card';
-import Pagination from '../app/Pagination';
+import PaginationRounded from '../app/Pagination';
 import { Box } from '@mui/material';
 import { useParams } from "react-router-dom";
 import fetchData from "../../utils/fetchData";
@@ -30,7 +30,7 @@ export default function({ }){
         (async () => {
             let json;
             try{
-            json = await fetchData((new URL(`/api/dish`, _.api_server)), {}, 'GET');
+            json = await fetchData((new URL(`/api/dish/?page=${currPage}`, _.api_server)), {}, 'GET');
             }
             catch(e){
                 enqueueSnackbar(e.message, {variant:'error'})
@@ -62,7 +62,7 @@ export default function({ }){
                             nav(`/dish/${dish.id}`);
                         }}
                         onBasket={() => {
-                            fetchData(new URL(`/api/basket/dish/${movie.id}`, _.api_server), {}, 'POST').then((data) => {
+                            fetchData(new URL(`/api/basket/dish/${card.id}`, _.api_server), {}, 'POST').then((data) => {
                                 const errors = errorParser(data);
                                 
                                 if (errors.length){
@@ -85,12 +85,14 @@ export default function({ }){
     return <>
         <Box sx={(theme) => theme.palette.pages.main.Main.bg}>
             <Header/>
-            <Box padding={2} sx={{display: "flex", flexWrap: "wrap", gap: 2, flexFlow: "row wrap", alignItems: "stretch", justifyContent: "space-around"}}>
+            <Box padding={2} sx={{display: "flex", flexWrap: "wrap", gap: 2, flexFlow: "row wrap", alignItems: "stretch", justifyContent: "center"}}>
                 
                 { children
                 /* <Movie page={parseInt(id ?? 1)} /> */}
             </Box>
-            <Pagination size={pageCount} />
+            <Box sx={{display: "table", margin: "0 auto"}}>
+                <PaginationRounded size={pageCount} setCurrPage ={setCurrPage}/>
+            </Box>
         </Box>
     </>;
 }
