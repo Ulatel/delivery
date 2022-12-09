@@ -33,6 +33,7 @@ export default function({ }){
         
         (async () => {
             let json;
+            console.log(currPage);
             try{
             json = await fetchData((new URL(`/api/dish/?page=${currPage}${filters}`, _.api_server)), {}, 'GET');
             }
@@ -55,6 +56,7 @@ export default function({ }){
 
                 return <Card
                         key={card.id}
+                        id={card.id}
                         name={card.name}
                         description={card.description}
                         price={card.price}
@@ -64,7 +66,7 @@ export default function({ }){
                         category={card.category}
 
                         onClick={() => {
-                            nav(`/dish/${dish.id}`);
+                            nav(`/dish/${card.id}`);
                         }}
                         onBasket={() => {
                             fetchData(new URL(`/api/basket/dish/${card.id}`, _.api_server), {}, 'POST').then((data) => {
