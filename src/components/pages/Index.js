@@ -41,7 +41,8 @@ export default function({ }){
                 return false;
             }
             //setLoading(false);
-            setPageCount(json?.pagination?.size);
+            console.log(json?.pagination);
+            setPageCount(json?.pagination?.count);
             
             if (!json.dishes.length) {
                 setNull(true);
@@ -89,18 +90,15 @@ export default function({ }){
     return <>
         <Box sx={(theme) => theme.palette.pages.main.Main.bg}>
             <Header/>
-            <Box sx={{display: "flex",flexWrap: "wrap", gap: 2, flexFlow: "row wrap", alignItems: "stretch", justifyContent: "center"}}>
-                <LimitTags/>
-                <FilterSelect/>
-                <FormControlLabel control={<Switch/>} label="Вегетарианское" sx={{color: "grey",  minWidth: 150 }}/>
-            </Box>
+            <LimitTags setFilters={setFilters}/>
+                
             <Box padding={2} sx={{display: "flex", flexWrap: "wrap", gap: 2, flexFlow: "row wrap", alignItems: "stretch", justifyContent: "center"}}>
                 
                 { children
                 /* <Movie page={parseInt(id ?? 1)} /> */}
             </Box>
             <Box sx={{display: "table", margin: "0 auto"}}>
-                <PaginationRounded size={pageCount} setCurrPage ={setCurrPage}/>
+                <PaginationRounded count={pageCount} setCurrPage ={setCurrPage} />
             </Box>
         </Box>
     </>;
