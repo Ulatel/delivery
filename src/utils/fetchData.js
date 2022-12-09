@@ -14,6 +14,10 @@ export default async function(url = '', data = {}, method = 'POST'){
         localStorage.removeItem('movieToken');
         window.location = '/login';
     }
+
+    if (!response.ok){
+        throw new Error(response.statusText);
+    }
     
     try {
         return await response.json();

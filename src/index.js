@@ -65,7 +65,7 @@ $(function(){//сразу после загрузки страницы из-за
                 };
             })),
             // { path: '/movie/:id', element: <Movie/> },//нужны доп аргументы, например id
-            // { path: '/:id', element: <Main /> },
+            { path: '/:id', element: <Main /> },
             { path: '*', element: <NotFound /> },
         ]);
         
