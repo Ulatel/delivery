@@ -17,23 +17,22 @@ export default function ImgMediaCard({ id, name, price, image, amount }) {
         component="img"
         alt="green iguana"
         height="140"
-        image = {image}
+        image = {"https://funik.ru/wp-content/uploads/2018/10/17478da42271207e1d86.jpg"}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          sss
+          {name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+          Цена/шт: {price} руб.
         </Typography>
       </CardContent>
       <CardActions>
         <Button size="small"><RemoveCircleOutlineIcon/></Button>
-        <Typography>1</Typography>
+        <Typography>amount</Typography>
         <Button size="small"><ControlPointIcon/></Button>
       </CardActions>
-      <Button sx={{marginRight: 5}}>Удалить</Button>
+      <Button sx={{marginRight: 5, color:"red"}}>Удалить</Button>
       </CardActions>
     </Card>
   );

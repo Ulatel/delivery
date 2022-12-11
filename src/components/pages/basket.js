@@ -72,9 +72,11 @@ export default function({ }){
         <Box sx={(theme) => theme.palette.pages.main.Main.bg}>
             <Header/>
             <List sx={{ width: '100%', maxWidth: 900, margin: "auto"}} >
-                <Basket></Basket>
-                { children }
+                
                 { children.length==0 && <Typography gutterBottom variant="h5" component="div" color="white" sx={{display: "flex", justifyContent: "center"}}>Корзина пуста</Typography>}
+                { children.length!=0 && <Typography gutterBottom variant="h5" component="div" color="white" sx={{display: "flex", justifyContent: "center"}}>Товары в корзине</Typography>}
+                { children }
+                
             </List>
         </Box>
     </>;
