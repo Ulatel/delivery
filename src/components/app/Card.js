@@ -37,11 +37,11 @@ export default function ({id,name,category,price,image,vegetarian,rating, descri
               return false;
           }
           //setLoading(false);
-          console.log(json)
-          if (json) {
+          
+          if (!json) {
             let json2;
             try{
-            json = await fetchData((new URL(`/api/dish/${key}/rating`, _.api_server)), {ratingDish}, 'POST');
+            json = await fetchData((new URL(`/api/dish/${id}/rating`, _.api_server)), {ratingDish}, 'POST');
             }
             catch(e){
                 enqueueSnackbar(e.message, {variant:'error'})
