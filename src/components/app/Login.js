@@ -30,7 +30,7 @@ export default function({ }){
                     e.preventDefault();
                     
                     fetchData(new URL(`/api/account/login`, _.api_server), {
-                        username: login,
+                        email: login,
                         password: pass,
                     }).then((data) => {
                         //обработчик ошибок запросов 
