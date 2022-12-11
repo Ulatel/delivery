@@ -54,11 +54,10 @@ export default function({ id, name, category, price, image, vegetarian, rating, 
           component="img"
           max-height="100"
           min-height="100"
+          sx = {{maxWidth: 500, margin:"auto"}}
           image={image}
           alt="meal img"
-          />
-          {(vegetarian) &&  <Icon sx={{position: "absolute", bottom: "0", right:"0", color:"green"}}><EnergySavingsLeafIcon/></Icon>}
-        </Box>
+          /></Box>
         
         <Typography sx ={{"textAlign": "center"}} variant="body2" color="text.secondary" margin="auto" >
             Категория блюда - {category}
@@ -77,7 +76,7 @@ export default function({ id, name, category, price, image, vegetarian, rating, 
             <Rating sx={{margin: "auto"}} name="customized-10" defaultValue={ratingDish} precision={0.1} max={10} value={ratingDish} onChange={(e, value)=>{if(window.SuperGlobal.auth[0])setRatingDish(value)}}/>
             </Stack>
 
-            <Typography sx ={{"textAlign": "center"}} variant="body2" color="text.secondary" margin="auto" >
+            <Typography sx ={{"font-weight": "bold","textAlign": "center"}} variant="body2" color="text.secondary" margin="auto" >
             Цена - {price}
           </Typography>
     </Box>
