@@ -12,9 +12,9 @@ import { positions } from '@mui/system';
 import fetchData from "../../utils/fetchData";
 import { useSnackbar } from "notistack";
 
-import _ from '../../../config'
+import _ from '../../../config';
 
-export default function ({id,name,category,price,image,vegetarian,rating, description}) {
+export default function({ id, name, category, price, image, vegetarian, rating, description }){
     const [ ratingDish, setRatingDish ] = useState(rating);
     const { enqueueSnackbar } = useSnackbar();
     
@@ -46,37 +46,41 @@ export default function ({id,name,category,price,image,vegetarian,rating, descri
       }})();
   }, [ratingDish]);
 
-
-  return (
-    <Card sx={{ maxWidth: 300, minWidth: 50, flexGrow: 1, flexShrink: 1}}>
-      <CardActionArea>
+    return <>(
+        <Box sx={{ maxWidth: 600, minWidth: 100, flexGrow: 1, flexShrink: 1, margin:"auto"}}>
+        <Typography sx={(theme) => theme.palette.pages.main.H3}>{name}</Typography>
+                
         <Box sx={{position: "relative"}}><CardMedia
           component="img"
-          height="140"
+          max-height="100"
+          min-height="100"
           image={image}
           alt="meal img"
           />
-          {(vegetarian) &&  <Icon sx={{position: "absolute", bottom: "0", right:"0", color:"green"}}><EnergySavingsLeafIcon/></Icon>
-        }
+          {(vegetarian) &&  <Icon sx={{position: "absolute", bottom: "0", right:"0", color:"green"}}><EnergySavingsLeafIcon/></Icon>}
         </Box>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
+        
+        <Typography sx ={{"textAlign": "center"}} variant="body2" color="text.secondary" margin="auto" >
             Категория блюда - {category}
+            
           </Typography>
-          <Stack spacing={1}>
-            <Rating name="customized-10" defaultValue={ratingDish} precision={0.1} max={10} value={ratingDish} onChange={(e, value)=>{if(window.SuperGlobal.auth[0])setRatingDish(value)}}/>
-            </Stack>
-          <Typography variant="body2" color="text.secondary">
+
+          <Typography sx ={{"textAlign": "center"}} variant="body2" color="text.secondary" margin="auto" >
+            {(vegetarian) && "Вегетарианское" || (!vegetarian) && "Не вегетарианское" }
+          </Typography>
+          
+
+          <Typography sx ={{"textAlign": "center"}} variant="body2" color="text.secondary" margin="auto" >
             {description}
           </Typography>
-        </CardContent>
-        <CardContent>
-            
-        </CardContent>
-      </CardActionArea>
-    </Card>
+          <Stack spacing={1}>
+            <Rating sx={{margin: "auto"}} name="customized-10" defaultValue={ratingDish} precision={0.1} max={10} value={ratingDish} onChange={(e, value)=>{if(window.SuperGlobal.auth[0])setRatingDish(value)}}/>
+            </Stack>
+
+            <Typography sx ={{"textAlign": "center"}} variant="body2" color="text.secondary" margin="auto" >
+            Цена - {price}
+          </Typography>
+    </Box>
   );
+    </>;
 }
