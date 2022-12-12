@@ -1,6 +1,6 @@
 import React, {useEffect, useState } from "react";
 import Header from '../app/Header';
-import Card from '../app/Card';
+import Order from '../app/Order';
 import PaginationRounded from '../Pagination';
 import FilterSelect from '../Sort';
 import LimitTags from '../Filter';
@@ -12,16 +12,16 @@ import { useSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
+import List from '@mui/material/List';
+
+import Typography from '@mui/material/Typography';
 
 import "../../less/pages/main.less";
 
-import _ from '../../../config'
+import _ from '../../../config';
 
 export default function({ }){
     const { id } = useParams();
-    const [ currPage, setCurrPage ] = useState(id ?? 1);
-    const [ pageCount, setPageCount ] = useState(1);
-    const [ filters, setFilters ] = useState("");
     const [ children, setChildren ] = useState([]);
     const [ isNull, setNull ] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
@@ -33,9 +33,8 @@ export default function({ }){
         
         (async () => {
             let json;
-            console.log(currPage);
             try{
-            json = await fetchData((new URL(`/api/dish/?page=${currPage}${filters}`, _.api_server)), {}, 'GET');
+            json = await fetchData((new URL(`/api/order`, _.api_server)), {}, 'GET');
             }
             catch(e){
                 enqueueSnackbar(e.message, {variant:'error'})
@@ -43,48 +42,42 @@ export default function({ }){
             }
             //setLoading(false);
             console.log(json);
-            setPageCount(json?.pagination?.count);
             
-            if (!json.dishes.length) {
+            if (!json) {
                 setNull(true);
                 enqueueSnackbar( 'No dishes', { variant: 'warning' });
                 
                 return false;
             }
             
-            setChildren(json.dishes.map((card) => {
+            setChildren(json.map((card) => {
 
-                return <Card
+                return <Order
                         key={card.id}
                         id={card.id}
-                        name={card.name}
-                        description={card.description}
+                        deliveryTime={card.deliveryTime}
+                        orderTime={card.orderTime}
                         price={card.price}
-                        image={card.image}
-                        vegetarian={card.vegetarian}
-                        rating={card.rating}
-                        category={card.category}
-                        amount = {0}
-                        
+                        status={card.status}
+
+                        onClick={() => {
+                            nav(`/order/${card.id}`);
+                        }}
                     />;
             }));
         })();
-    }, [currPage, filters]);
+    }, []);
 
     return <>
         <Box sx={(theme) => theme.palette.pages.main.Main.bg}>
             <Header/>
-            <LimitTags setFilters={setFilters}/>
+            <List sx={{ width: '100%', maxWidth: 900, margin: "auto"}} >
                 
-            <Box padding={2} sx={{display: "flex", flexWrap: "wrap", gap: 2, flexFlow: "row wrap", alignItems: "stretch", justifyContent: "center"}}>
+                { children.length==0 && <Typography gutterBottom variant="h5" component="div" color="white" sx={{display: "flex", justifyContent: "center"}}>Список заказов пуст</Typography>}
+                { children.length!=0 && <Typography gutterBottom variant="h5" component="div" color="white" sx={{display: "flex", justifyContent: "center"}}>Последние заказы</Typography>}
+                { children }
                 
-                { children
-                /* <Movie page={parseInt(id ?? 1)} /> */}
-            </Box>
-            <Box sx={{display: "table", margin: "0 auto"}}>
-                <PaginationRounded count={pageCount} setCurrPage ={setCurrPage} />
-            </Box>
+            </List>
         </Box>
     </>;
 }
-
