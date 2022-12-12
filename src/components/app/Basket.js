@@ -11,13 +11,14 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 export default function ImgMediaCard({ id, name, price, image, amount }) {
     
   return (
-    <Card sx={{ maxWidth: 900, display: "inline-block", flexWrap: "wrap",  flexFlow: "row wrap", alignItems: "stretch"}}>
+    <Card sx={{ maxWidth: 900, maxWidth: "900px", display: "inline-block", flexWrap: "wrap",  flexFlow: "row wrap", alignItems: "center"}}>
       <CardActions>
       <CardMedia
         component="img"
         alt="green iguana"
         height="140"
-        image = {"https://funik.ru/wp-content/uploads/2018/10/17478da42271207e1d86.jpg"}
+        sx={{maxWidth: "250px"}}
+        image = {image}
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
@@ -29,7 +30,7 @@ export default function ImgMediaCard({ id, name, price, image, amount }) {
       </CardContent>
       <CardActions>
         <Button size="small"><RemoveCircleOutlineIcon/></Button>
-        <Typography>amount</Typography>
+        <Typography>{amount}</Typography>
         <Button size="small"><ControlPointIcon/></Button>
       </CardActions>
       <Button sx={{marginRight: 5, color:"red"}}>Удалить</Button>

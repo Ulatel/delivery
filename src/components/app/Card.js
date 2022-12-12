@@ -11,13 +11,17 @@ import { Icon, Box } from '@mui/material';
 import { positions } from '@mui/system';
 import fetchData from "../../utils/fetchData";
 import { useSnackbar } from "notistack";
+import CardActions from '@mui/material/CardActions';
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import Button from '@mui/material/Button';
 
 import _ from '../../../config'
 
-export default function ({id,name,category,price,image,vegetarian,rating, description}) {
+
+export default function ({id,name,category,price,image,vegetarian,rating, description, amount}) {
     const [ ratingDish, setRatingDish ] = useState(rating);
     const { enqueueSnackbar } = useSnackbar();
-    
     useEffect(() => {
       //setLoading(true);
       
@@ -31,7 +35,7 @@ export default function ({id,name,category,price,image,vegetarian,rating, descri
               return false;
           }
           //setLoading(false);
-          
+          console.log(json)
           if (json) {
             let json2;
             try{
@@ -45,11 +49,47 @@ export default function ({id,name,category,price,image,vegetarian,rating, descri
           
       }})();
   }, [ratingDish]);
+  
+function outBasket(id){{
+  fetchData(new URL(`/api/basket/dish/${id}`, _.api_server), {dishId : id}, 'POST').then((data) => {
+      const errors = errorParser(data);
+      
+      if (errors.length){
+          enqueueSnackbar(errors.join(', '), { variant: 'error' });
+          return false;
+      }
+      
+      enqueueSnackbar(`${'added to' } basket`, { variant: 'success' });
+      
+      return true;
+  }).catch((e) => {
+      enqueueSnackbar(e.message, { variant: 'error' });
+  });
+  console.log("в корзину")
+}};
 
+function outBasket(id, ins){{
+  fetchData(new URL(`/api/basket/dish/${id}`, _.api_server), {dishId : id, inscare: ins}, 'DELETE').then((data) => {
+      const errors = errorParser(data);
+      
+      if (errors.length){
+          enqueueSnackbar(errors.join(', '), { variant: 'error' });
+          return false;
+      }
+      
+      enqueueSnackbar(`${'added to' } basket`, { variant: 'success' });
+      
+      return true;
+  }).catch((e) => {
+      enqueueSnackbar(e.message, { variant: 'error' });
+  });
+
+  console.log("из корзины")
+}};
 
   return (
-    <Card sx={{ maxWidth: 300, minWidth: 50, flexGrow: 1, flexShrink: 1}}>
-      <CardActionArea>
+    <Card sx={{position: "relative", maxWidth: 300, minWidth: 50, flexGrow: 1, flexShrink: 1}}  onClick={()=>{nav(`/dish/${card.id}`)}}>
+      <CardActionArea >
         <Box sx={{position: "relative"}}><CardMedia
           component="img"
           height="140"
@@ -72,11 +112,24 @@ export default function ({id,name,category,price,image,vegetarian,rating, descri
           <Typography variant="body2" color="text.secondary">
             {description}
           </Typography>
+          
         </CardContent>
-        <CardContent>
-            
-        </CardContent>
+        {window.SuperGlobal.auth[0]&&<Box sx={{height: "30px"}}/>}
       </CardActionArea>
+
+        {window.SuperGlobal.auth[0] &&
+      <CardActions sx={{position:"absolute", bottom: "0", right:"0"}}>
+        <Typography sx={{left:"0"}}>Цена: {price} </Typography>
+        { {amount}>0 && <>
+        <Button size="small" onClick={{} /*OnBasket(id)*/}><RemoveCircleOutlineIcon/></Button>
+        <Typography>{amount}</Typography>
+        <Button size="small" onClick={{}/*OutBasket(() => { amount<1? "true": "false"})*/}><ControlPointIcon/></Button>
+        </>}
+        { {amount} && <>
+        <Button size="small" onClick={ {}/*OnBasket()*/}> В корзину </Button>
+        </>}
+      </CardActions>
+      }
     </Card>
   );
 }
