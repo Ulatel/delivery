@@ -68,8 +68,8 @@ export default function(){
         >
         
             { <>
-                <Button key={'menu'} component={Link} variant='outline' to='/menu' sx={() => {
-                    return { backgroundColor: location.pathname == '/menu' ? grey[800] : '' };
+                <Button key={'menu'} component={Link} variant='outline' to='/' sx={() => {
+                    return { backgroundColor: location.pathname == '/' ? grey[800] : '' };
                 }}>Меню</Button>
             {window.SuperGlobal.auth[0] &&
             <>

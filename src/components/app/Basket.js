@@ -8,11 +8,12 @@ import Typography from '@mui/material/Typography';
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
-export default function ImgMediaCard({ id, name, price, image, amount }) {
+import _ from '../../../config';
+export default function({ id, name, price, image, amount, inBasket, outBasket }) {
     
   return (
-    <Card sx={{ maxWidth: 900,  alignItems: "stretch", display: "inline-block", flexWrap: "wrap",  flexFlow: "row wrap"}}>
-      <CardActions>
+    <Card sx={{ maxWidth: 900,  alignItems: "stretch", display: "flex", flexWrap: "wrap", justifyContent: "space-between",  flexFlow: "row wrap"}}>
+      <CardActions sx={{ maxWidth: 900,  alignItems: "stretch", display: "flex", flexWrap: "wrap", justifyContent: "space-between",  flexFlow: "row wrap"}}>
       <CardMedia
         component="img"
         alt="green iguana"
@@ -29,11 +30,11 @@ export default function ImgMediaCard({ id, name, price, image, amount }) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small"><RemoveCircleOutlineIcon/></Button>
+        <Button size="small" onClick={()=>{outBasket(id, "false")}}><RemoveCircleOutlineIcon/></Button>
         <Typography>{amount}</Typography>
-        <Button size="small"><ControlPointIcon/></Button>
+        <Button size="small" onClick={()=>{inBasket(id)}} ><ControlPointIcon/></Button>
       </CardActions>
-      <Button sx={{marginRight: 5, color:"red"}}>Удалить</Button>
+      <Button sx={{color:"red"}} onClick={()=>{outBasket(id, "true")}} >Удалить</Button>
       </CardActions>
     </Card>
   );

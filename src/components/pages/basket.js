@@ -24,6 +24,7 @@ export default function({ }){
     const { id } = useParams();
     const [ children, setChildren ] = useState([]);
     const [ isNull, setNull ] = useState(false);
+    const [ update, setUpdate] = useState("");
     const { enqueueSnackbar } = useSnackbar();
     const nav = useNavigate();
 
@@ -33,6 +34,7 @@ export default function({ }){
         
         (async () => {
             let json;
+            setUpdate("");
             try{
             json = await fetchData((new URL(`/api/basket`, _.api_server)), {}, 'GET');
             }
@@ -63,10 +65,47 @@ export default function({ }){
                         onClick={() => {
                             nav(`/dish/${card.id}`);
                         }}
+
+                        inBasket={(id)=>{
+                            fetchData(new URL(`/api/basket/dish/${id}`, _.api_server), {dishId : id}, 'POST').then((data) => {
+                                const errors = errorParser(data);
+                                
+                                if (errors.length){
+                                    enqueueSnackbar(errors.join(', '), { variant: 'error' });
+                                    return false;
+                                }
+                                
+                                enqueueSnackbar(`${'added to' } basket`, { variant: 'success' });
+                                setUpdate("1");
+                                return true;
+                            }).catch((e) => {
+                                enqueueSnackbar(e.message, { variant: 'error' });
+                            });
+                            console.log("в корзину")
+                          }}
+
+                          outBasket= {(id, ins)=>{
+                            fetchData(new URL(`/api/basket/dish/${id}`, _.api_server), {dishId : id, inscare: ins}, 'DELETE').then((data) => {
+                                const errors = errorParser(data);
+                                
+                                if (errors.length){
+                                    enqueueSnackbar(errors.join(', '), { variant: 'error' });
+                                    return false;
+                                }
+                                
+                                enqueueSnackbar(`${'added to' } basket`, { variant: 'success' });
+                                
+                                return true;
+                            }).catch((e) => {
+                                enqueueSnackbar(e.message, { variant: 'error' });
+                            });
+                            setUpdate("1");
+                            console.log("из корзины")
+                          }}
                     />;
             }));
         })();
-    }, []);
+    }, [update]);
 
     return <>
         <Box sx={(theme) => theme.palette.pages.main.Main.bg}>
