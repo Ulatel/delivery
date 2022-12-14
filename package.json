@@ -58,7 +58,8 @@
   "dependencies": {
     "express": "^4.18.1",
     "express-ws": "^5.0.2",
-    "patch-package": "^6.4.7"
+    "patch-package": "^6.4.7",
+    "react-text-mask": "^5.5.0"
   },
   "overrides": {
     "inline-images": {

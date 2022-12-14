@@ -19,18 +19,19 @@ export default function({ id, name, price, deliveryTime, orderTime, status, conf
       
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Заказ  от {orderTime}
+          Заказ  от {new Intl.DateTimeFormat().format(Date.parse(orderTime))}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Статус заказа - {status}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Доставлен:  {deliveryTime}
+          Доставлен:  {new Intl.DateTimeFormat().format(Date.parse(deliveryTime))}
         </Typography>
       </CardContent>
       <CardContent>{ status=="InProcess" && 
-      <Button sx={{marginRight: 5, color:"red"}} onClick={(event)=>{confirm(id); event.stopPropagation();}}>Подтвердить заказ</Button>
+      <Typography sx={{marginRight: 5, color:"red"}} onClick={(event)=>{confirm(id); event.stopPropagation();}}>Подтвердить заказ</Typography>
     }
+    
       <Typography variant="body2" color="text.secondary" margin="right">
           Цена:  {price}
         </Typography>

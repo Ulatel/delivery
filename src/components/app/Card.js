@@ -22,6 +22,7 @@ import _ from '../../../config'
 
 export default function ({id,name,category,price,image,vegetarian,rating, description, amount, outBasket, inBasket, changeRating}) {
 
+
     const { enqueueSnackbar } = useSnackbar();
     const nav = useNavigate();
     
@@ -50,7 +51,7 @@ export default function ({id,name,category,price,image,vegetarian,rating, descri
             Категория блюда - {category}
           </Typography>
           <Stack spacing={1}>
-            <Rating name="customized-10" defaultValue={rating} precision={0.1} max={10} value={rating} onClick={(event, value)=>{ changeRating(id, value); event.stopPropagation();  }}/>
+            <Rating name="customized-10" defaultValue={rating} precision={0.1} max={10} onClick={(event)=>{ event.stopPropagation()}} onChange={(event,value)=>{ console.log(value);changeRating(id, value);  }}/>
             </Stack>
           <Typography variant="body2" color="text.secondary">
             {description}

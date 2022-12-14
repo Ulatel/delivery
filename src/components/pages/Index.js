@@ -82,6 +82,7 @@ export default function({ }){
                             }
                             //setLoading(false);
                             console.log(json)
+                            console.log(val);
                             if (json) {
                                 try{
                                 fetchData((new URL(`/api/dish/${id}/rating`, _.api_server)), {val}, 'POST');
