@@ -1,6 +1,6 @@
 import React, {useEffect, useState } from "react";
 import Header from '../app/Header';
-import Order from '../app/Order';
+import Orders from '../app/Orders';
 import PaginationRounded from '../Pagination';
 import FilterSelect from '../Sort';
 import LimitTags from '../Filter';
@@ -32,6 +32,7 @@ export default function({ }){
         //setLoading(true);
         
         (async () => {
+            console.log(2);
             let json;
             try{
             json = await fetchData((new URL(`/api/order`, _.api_server)), {}, 'GET');
@@ -52,7 +53,7 @@ export default function({ }){
             
             setChildren(json.map((card) => {
 
-                return <Order
+                return <Orders
                         key={card.id}
                         id={card.id}
                         deliveryTime={card.deliveryTime}
@@ -62,6 +63,16 @@ export default function({ }){
 
                         onClick={() => {
                             nav(`/order/${card.id}`);
+                        }}
+
+                        confirm={(id)=>{
+                            try{
+                                fetchData((new URL(`/api/order/${id.toString()}/status`, _.api_server)), {}, 'POST');
+                                }
+                                catch(e){
+                                    enqueueSnackbar(e.message, {variant:'error'})
+                                    return false;
+                                }  
                         }}
                     />;
             }));
