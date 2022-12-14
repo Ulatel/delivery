@@ -18,29 +18,35 @@ import "../../less/pages/main.less";
 import _ from '../../../config'
 
 export default function({ }){
-    const { id } = useParams();
-    const [ currPage, setCurrPage ] = useState(id ?? 1);
+    let params = new URLSearchParams(location.search);
+    const page = parseInt(params.get("page")??"1");
+
+    const [ currPage, setCurrPage ] = useState(page ?? 1);
     const [ pageCount, setPageCount ] = useState(1);
     const [ filters, setFilters ] = useState("");
     const [ children, setChildren ] = useState([]);
     const [ isNull, setNull ] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
     const nav = useNavigate();
-
-
+    const [ urlPag, setURLpag] = useState(new URLSearchParams([["page", 1]]));
+    const [ urlFilt, setURLfilt] = useState(new URLSearchParams(params.getAll("categories", "sorting", "vegetarian")??""));
+    
     useEffect(() => {
         //setLoading(true);
         
         (async () => {
+            setCurrPage(page);
+            setURLpag(new URLSearchParams(params.get("page")??"1"));
             let json;
             console.log(currPage);
             try{
-            json = await fetchData((new URL(`/api/dish/?page=${currPage}${filters}`, _.api_server)), {}, 'GET');
+            json = await fetchData((new URL('/api/dish/?'+urlPag.toString()+"&"+urlFilt.toString(), _.api_server)), {}, 'GET');
             }
             catch(e){
                 enqueueSnackbar(e.message, {variant:'error'})
                 return false;
             }
+            console.log((new URL('/api/dish/?${urlFilt}${urlPag}', _.api_server).toString));
             //setLoading(false);
             console.log(json);
             setPageCount(json?.pagination?.count);
@@ -69,12 +75,13 @@ export default function({ }){
                     />;
             }));
         })();
-    }, [currPage, filters]);
+    }, [currPage, urlFilt]);
 
+    console.log(page);
     return <>
         <Box sx={(theme) => theme.palette.pages.main.Main.bg}>
             <Header/>
-            <LimitTags setFilters={setFilters}/>
+            <LimitTags urlPag={urlPag} setURLpag={setURLpag} setCurrPage ={setCurrPage} setURL={setURLfilt} />
                 
             <Box padding={2} sx={{display: "flex", flexWrap: "wrap", gap: 2, flexFlow: "row wrap", alignItems: "stretch", justifyContent: "center"}}>
                 
@@ -82,7 +89,7 @@ export default function({ }){
                 /* <Movie page={parseInt(id ?? 1)} /> */}
             </Box>
             <Box sx={{display: "table", margin: "0 auto"}}>
-                <PaginationRounded count={pageCount} setCurrPage ={setCurrPage} />
+                <PaginationRounded pageid={currPage} count={pageCount} setCurrPage ={setCurrPage} setURL={setURLpag} />
             </Box>
         </Box>
     </>;
