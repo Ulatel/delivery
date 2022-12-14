@@ -9,15 +9,16 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { useNavigate } from "react-router-dom";
 
-export default function LimitTags({setFilters}) {
+export default function LimitTags({urlPag, setURL, setURLpag, setCurrPage}) {
   const [sort, setSort] = React.useState('');
   const [vegetarian, setVegeterian] = React.useState('');
   const [filt, setFilt] = React.useState([]);
   const handleChange = (event) => {
     setSort(event.target.value);
   };
-  
+  const nav = useNavigate();
   let str = "";
 
   return (
@@ -62,15 +63,16 @@ export default function LimitTags({setFilters}) {
     
     <Button variant='contained' type='submit' onClick={(e)=>{
       e.preventDefault();
-      str="";
-      let f='';
-      if(sort) str+="&sorting="+sort;
-      if(filt) 
-        for(f in filt)
-          str+="&categories="+filt[f];
-      if(vegetarian) str+="&vegetarian=true";
-      console.log(str);
-      setFilters(str);
+      
+
+      let params = new URLSearchParams();
+      sort && params.set("sorting", sort);
+      filt[0] && params.set("categories", filt);
+      vegetarian && params.set("vegetarian", vegetarian);
+      setURL(params);
+      setURLpag(new URLSearchParams([["page", 1]])); 
+      setCurrPage(1);
+      nav(`/?page=1&${params}`);
     }}>Применить</Button>
     </Box>
   );

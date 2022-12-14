@@ -16,12 +16,14 @@ import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import Button from '@mui/material/Button';
 
+import { useNavigate } from "react-router-dom";
 import _ from '../../../config'
 
 
 export default function ({id,name,category,price,image,vegetarian,rating, description, amount}) {
     const [ ratingDish, setRatingDish ] = useState(rating);
     const { enqueueSnackbar } = useSnackbar();
+    const nav = useNavigate();
     useEffect(() => {
       //setLoading(true);
       
@@ -88,7 +90,7 @@ function outBasket(id, ins){{
 }};
 
   return (
-    <Card sx={{position: "relative", maxWidth: 300, minWidth: 50, flexGrow: 1, flexShrink: 1}}  onClick={()=>{nav(`/dish/${card.id}`)}}>
+    <Card sx={{position: "relative", maxWidth: 300, minWidth: 50, flexGrow: 1, flexShrink: 1}}  onClick={()=>{nav(`/dish/${id}`)}}>
       <CardActionArea >
         <Box sx={{position: "relative"}}><CardMedia
           component="img"
@@ -114,19 +116,19 @@ function outBasket(id, ins){{
           </Typography>
           
         </CardContent>
-        {window.SuperGlobal.auth[0]&&<Box sx={{height: "30px"}}/>}
+        {<Box sx={{height: "30px"}}/>}
       </CardActionArea>
 
-        {window.SuperGlobal.auth[0] &&
+        {
       <CardActions sx={{position:"absolute", bottom: "0", right:"0"}}>
         <Typography sx={{left:"0"}}>Цена: {price} </Typography>
         { {amount}>0 && <>
-        <Button size="small" onClick={{} /*OnBasket(id)*/}><RemoveCircleOutlineIcon/></Button>
+        <Button size="small" onClick={()=>{} /*OnBasket(id)*/}><RemoveCircleOutlineIcon/></Button>
         <Typography>{amount}</Typography>
-        <Button size="small" onClick={{}/*OutBasket(() => { amount<1? "true": "false"})*/}><ControlPointIcon/></Button>
+        <Button size="small" onClick={()=>{}/*OutBasket(() => { amount<1? "true": "false"})*/}><ControlPointIcon/></Button>
         </>}
         { {amount} && <>
-        <Button size="small" onClick={ {}/*OnBasket()*/}> В корзину </Button>
+        <Button size="small" onClick={()=> {}/*OnBasket()*/}> В корзину </Button>
         </>}
       </CardActions>
       }

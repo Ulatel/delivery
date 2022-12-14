@@ -22,6 +22,14 @@ const pages = (ctx => {
 window.SuperGlobal = window.SuperGlobal || {};//шлобальное состофяние, например для аутентификации, можно заменить редуксом
 
 $(function(){//сразу после загрузки страницы из-за $
+    $.fn.extend({
+        qcss: function(css) {
+            return $(this).queue(function(next) {
+                $(this).css(css);
+                next();
+            });
+        }
+    });
 
     function App({ }){//начало приложнеия
         window.SuperGlobal.darkMode = useState(localStorage.getItem('theme') ?? false);//состояние темы
@@ -65,7 +73,8 @@ $(function(){//сразу после загрузки страницы из-за
                 };
             })),
             // { path: '/movie/:id', element: <Movie/> },//нужны доп аргументы, например id
-            { path: '/:id', element: <Main /> },
+            { path: '/?page=:page', element: <Main /> },
+            
             { path: '*', element: <NotFound /> },
         ]);
         
