@@ -77,6 +77,7 @@ export default function({ id, name, category, price, image, vegetarian, rating, 
           <Stack spacing={1}>
             <Rating sx={{margin: "auto"}} name="customized-10" defaultValue={rating} precision={0.1} max={10} value={rating} 
               onChange={(e, value)=>{if(window.SuperGlobal.auth[0]) setRatingDish(value); if(!window.SuperGlobal.auth[0]) enqueueSnackbar(e.message, {message: "вы не зарегистрирваны"})}}/>
+            
             </Stack>
 
             <Typography sx ={{"fontWeight": "bold","textAlign": "center"}} variant="body2" color="text.secondary" margin="auto" >

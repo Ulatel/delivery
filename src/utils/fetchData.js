@@ -16,7 +16,7 @@ export default async function(url = '', data = {}, method = 'POST'){
     }
 
     if (!response.ok){
-        throw new Error(response.statusText);
+        throw new Error(response.message ?? response.statusText);
     }
     
     try {

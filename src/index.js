@@ -13,7 +13,7 @@ import { BrowserRouter as Router, useRoutes } from 'react-router-dom'
 import _ from '../config'
 import "./less/index.less";
 import Dish from "./components/pages/dish";
-import Order from "./components/app/Orders";
+import Order from "./components/pages/order";
 
 const pages = (ctx => {
     let keys = ctx.keys();

@@ -4,6 +4,7 @@ import errorParser from "../../utils/errorParser";
 import { useSnackbar } from "notistack";
 import { Box } from "@mui/system";
 import { Link, useNavigate } from "react-router-dom";
+import MaskedInput from 'react-text-mask'
 import { Button, Input, Paper, Select, MenuItem, Typography } from "@mui/material";
 
 import _ from '../../../config';
@@ -31,11 +32,16 @@ export default function({ }){
                 <Input required placeholder='ФИО' type='text' value={FIO} onChange={(e) => setFIO(e.target.value)} fullWidth />
                 <Box sx={{ height: '0.5em' }} />
                 <Typography >Пол</Typography>
-                <Select sx={{ height: '3em' }} required value={Male} onChange={(e) => {setMale(e.target.value);alert(e.target.value)}} fullWidth  >
+                <Select sx={{ height: '3em' }} required value={Male} onChange={(e) => {setMale(e.target.value)}} fullWidth  >
                             <MenuItem value={"Male"}>Мужской</MenuItem>
                             <MenuItem value={"Female"}>Женский</MenuItem>
                         </Select>
-                
+                        <MaskedInput
+                            placeholder="введите номер телефона"
+                            guide={false}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
+                            mask={['+','7','(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+                        />
                 <Typography >Телефон</Typography>
                 <Input required placeholder='+7(ххх) ххх-хх-хх' type='number' value={PhoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} fullWidth />
                 <Box sx={{ height: '0.5em' }} />
@@ -53,14 +59,46 @@ export default function({ }){
                 <Button variant='contained' type='submit' sx={{ marginRight: '0.25em' }} onClick={(e) => {
                     e.preventDefault();
                     
+                    let date = Date.parse(BirthDate);
+
+                    if(new Date() <= new Date(date)){
+                        enqueueSnackbar(`Одумойтесь, вы еще не родились!!`, { variant: 'error' });
+                        return 0;
+                    }
+                    var regex;var matches ;
+                    regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    matches=login.match(regex);
+                    if(!matches){
+                        enqueueSnackbar(`Введите корректную почту`, { variant: 'error' });
+                        return 0;
+                    }
+                    regex = /\d+/g;
+                    matches = pass.match(regex);
+
+                    if(!matches){
+                        enqueueSnackbar(`Пароль должен содержать цифры`, { variant: 'error' });
+                        return 0;
+                    }
+
+                    if(pass.length<6){
+                        enqueueSnackbar(`Пароль должен быть больше 6 символов`, { variant: 'error' });
+                        return 0;
+                    }
+
+                    
+
+                    if(!FIO || !pass || !login ||!Adress || !BirthDate || !Male || !PhoneNumber){
+                        enqueueSnackbar(`Все поля должны быть заполнены!!`, { variant: 'error' });
+                        return 0;
+                    }
                     fetchData(new URL(`/api/account/register`, _.api_server), {
                         fullName: FIO,
                         password: pass,
                         email: login,
                         address: Adress,
-                        birthDate: BirthDate,
+                        birthDate: BirthDate.toString(),
                         gender: Male,
-                        phoneNumber: PhoneNumber
+                        phoneNumber: PhoneNumber.toString()
                     }).then((data) => {
                         //обработчик ошибок запросов 
                         const errors = errorParser(data);
