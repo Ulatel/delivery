@@ -12,6 +12,7 @@ import { BrowserRouter as Router, useRoutes } from 'react-router-dom'
 
 import _ from '../config'
 import "./less/index.less";
+import Dish from "./components/pages/dish";
 
 const pages = (ctx => {
     let keys = ctx.keys();
@@ -74,7 +75,7 @@ $(function(){//сразу после загрузки страницы из-за
             })),
             // { path: '/movie/:id', element: <Movie/> },//нужны доп аргументы, например id
             { path: '/?page=:page', element: <Main /> },
-            
+            { path: '/dish/:id', element: <Dish/> },
             { path: '*', element: <NotFound /> },
         ]);
         
