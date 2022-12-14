@@ -71,7 +71,68 @@ export default function({ }){
                         rating={card.rating}
                         category={card.category}
                         amount = {0}
-                        
+                        changeRating={async(id, val)=> {
+                            let json;
+                            try{
+                            json = await fetchData((new URL(`/api/dish/${id}/rating/check`, _.api_server)), {}, 'GET');
+                            }
+                            catch(e){
+                                enqueueSnackbar(e.message, {variant:'error'})
+                                return false;
+                            }
+                            //setLoading(false);
+                            console.log(json)
+                            if (json) {
+                                try{
+                                fetchData((new URL(`/api/dish/${id}/rating`, _.api_server)), {val}, 'POST');
+                                }
+                                catch(e){
+                                    enqueueSnackbar(e.message, {variant:'error'})
+                                    return false;
+                                }
+
+                                enqueueSnackbar(`${'added to' } rating`, { variant: 'success' });
+                            }
+                            else{
+                                enqueueSnackbar(`вы этого не заказывали`, { variant: 'error' });
+                            }
+                        }}
+                        inBasket={(id)=>{
+                            fetchData(new URL(`/api/basket/dish/${id}`, _.api_server), {dishId : id}, 'POST').then((data) => {
+                                const errors = errorParser(data);
+                                
+                                if (errors.length){
+                                    enqueueSnackbar(errors.join(', '), { variant: 'error' });
+                                    return false;
+                                }
+                                
+                                enqueueSnackbar(`${'added to' } basket`, { variant: 'success' });
+                                
+                                return true;
+                            }).catch((e) => {
+                                enqueueSnackbar(e.message, { variant: 'error' });
+                            });
+                            console.log("в корзину")
+                          }}
+
+                          outBasket= {(id, ins)=>{
+                            fetchData(new URL(`/api/basket/dish/${id}`, _.api_server), {dishId : id, inscare: ins}, 'DELETE').then((data) => {
+                                const errors = errorParser(data);
+                                
+                                if (errors.length){
+                                    enqueueSnackbar(errors.join(', '), { variant: 'error' });
+                                    return false;
+                                }
+                                
+                                enqueueSnackbar(`${'added to' } basket`, { variant: 'success' });
+                                
+                                return true;
+                            }).catch((e) => {
+                                enqueueSnackbar(e.message, { variant: 'error' });
+                            });
+                          
+                            console.log("из корзины")
+                          }}
                     />;
             }));
         })();
