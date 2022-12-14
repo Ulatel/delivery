@@ -18,7 +18,7 @@ export default function(){
     const nav = useNavigate();
     
     const nick = useMemo(() => {
-       return window.SuperGlobal.syncProfile[0]?.nickName
+       return window.SuperGlobal.syncProfile[0]?.fullName
     }, [window.SuperGlobal.syncProfile[0]]);
     
     const location = useLocation();

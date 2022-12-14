@@ -57,7 +57,7 @@ export default function({ }){
                 
                 return false;
             }
-            
+            console.log(window.SuperGlobal.syncProfile[0]);
             setChildren(json.dishes.map((card) => {
 
                 return <Card
