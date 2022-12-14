@@ -1,10 +1,11 @@
 import React, {useEffect, useState } from "react";
 import Header from '../app/Header';
 import Orders from '../app/Orders';
+import Card from '@mui/material/Card';
 import PaginationRounded from '../Pagination';
 import FilterSelect from '../Sort';
 import LimitTags from '../Filter';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { useParams } from "react-router-dom";
 import fetchData from "../../utils/fetchData";
 import errorParser from "../../utils/errorParser";
@@ -23,6 +24,9 @@ import _ from '../../../config';
 export default function({ }){
     const { id } = useParams();
     const [ children, setChildren ] = useState([]);
+    
+    const [ fullBasket, setFull ] = useState("");
+    const [ update, setUpdate ] = useState(0);
     const [ isNull, setNull ] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
     const nav = useNavigate();
@@ -32,7 +36,7 @@ export default function({ }){
         //setLoading(true);
         
         (async () => {
-            console.log(2);
+            
             let json;
             try{
             json = await fetchData((new URL(`/api/order`, _.api_server)), {}, 'GET');
@@ -42,14 +46,24 @@ export default function({ }){
                 return false;
             }
             //setLoading(false);
-            console.log(json);
-            
+            //console.log(json);
+            setUpdate(0);
             if (!json) {
                 setNull(true);
                 enqueueSnackbar( 'No dishes', { variant: 'warning' });
                 
                 return false;
             }
+            let json2;
+            try{
+                json2 = await fetchData((new URL(`/api/basket`, _.api_server)), {}, 'GET');
+                }
+            catch(e){
+                enqueueSnackbar(e.message, {variant:'error'})
+                return false;
+            }
+            setFull("");
+            if(json2.length>0) setFull("1");
             
             setChildren(json.map((card) => {
 
@@ -73,15 +87,25 @@ export default function({ }){
                                     enqueueSnackbar(e.message, {variant:'error'})
                                     return false;
                                 }  
+                                setUpdate(1);
                         }}
                     />;
             }));
         })();
-    }, []);
+    }, [update]);
 
     return <>
         <Box sx={(theme) => theme.palette.pages.main.Main.bg}>
-            <Header/>
+            <Header/>{
+                fullBasket &&
+                <Card sx={{margin: "auto", display: "flex",justifyContent: "space-between", maxWidth: 900, position: "relative", flexWrap: "wrap",  flexFlow: "row wrap", alignItems: "stretch"}}>
+                    <Typography marginLeft={2} marginTop={1} variant="body2" color="text.secondary">
+                    В корзине есть блюда, которые можно оформить
+                    </Typography>
+                    <Button  onClick={()=>{nav(`/purchase`)}}>Оформить</Button>
+                </Card>
+            }
+
             <List sx={{ width: '100%', maxWidth: 900, margin: "auto"}} >
                 
                 { children.length==0 && <Typography gutterBottom variant="h5" component="div" color="white" sx={{display: "flex", justifyContent: "center"}}>Список заказов пуст</Typography>}

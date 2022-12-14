@@ -20,74 +20,15 @@ import { useNavigate } from "react-router-dom";
 import _ from '../../../config'
 
 
-export default function ({id,name,category,price,image,vegetarian,rating, description, amount}) {
-    const [ ratingDish, setRatingDish ] = useState(rating);
+export default function ({id,name,category,price,image,vegetarian,rating, description, amount, outBasket, inBasket, changeRating}) {
+
     const { enqueueSnackbar } = useSnackbar();
     const nav = useNavigate();
-    useEffect(() => {
-      //setLoading(true);
-      
-      (async () => {if(window.SuperGlobal.auth[0]){
-          let json;
-          try{
-          json = await fetchData((new URL(`/api/dish/${id}/rating/check`, _.api_server)), {}, 'GET');
-          }
-          catch(e){
-              enqueueSnackbar(e.message, {variant:'error'})
-              return false;
-          }
-          //setLoading(false);
-          
-          if (!json) {
-            let json2;
-            try{
-            json = await fetchData((new URL(`/api/dish/${id}/rating`, _.api_server)), {ratingDish}, 'POST');
-            }
-            catch(e){
-                enqueueSnackbar(e.message, {variant:'error'})
-                return false;
-            }
-          }
-          
-      }})();
-  }, [ratingDish]);
+    
   
-function outBasket(id){{
-  fetchData(new URL(`/api/basket/dish/${id}`, _.api_server), {dishId : id}, 'POST').then((data) => {
-      const errors = errorParser(data);
-      
-      if (errors.length){
-          enqueueSnackbar(errors.join(', '), { variant: 'error' });
-          return false;
-      }
-      
-      enqueueSnackbar(`${'added to' } basket`, { variant: 'success' });
-      
-      return true;
-  }).catch((e) => {
-      enqueueSnackbar(e.message, { variant: 'error' });
-  });
-  console.log("в корзину")
-}};
 
-function outBasket(id, ins){{
-  fetchData(new URL(`/api/basket/dish/${id}`, _.api_server), {dishId : id, inscare: ins}, 'DELETE').then((data) => {
-      const errors = errorParser(data);
-      
-      if (errors.length){
-          enqueueSnackbar(errors.join(', '), { variant: 'error' });
-          return false;
-      }
-      
-      enqueueSnackbar(`${'added to' } basket`, { variant: 'success' });
-      
-      return true;
-  }).catch((e) => {
-      enqueueSnackbar(e.message, { variant: 'error' });
-  });
 
-  console.log("из корзины")
-}};
+
 
   return (
     <Card sx={{position: "relative", maxWidth: 300, minWidth: 50, flexGrow: 1, flexShrink: 1}}  onClick={()=>{nav(`/dish/${id}`)}}>
@@ -109,7 +50,7 @@ function outBasket(id, ins){{
             Категория блюда - {category}
           </Typography>
           <Stack spacing={1}>
-            <Rating name="customized-10" defaultValue={ratingDish} precision={0.1} max={10} value={ratingDish} onChange={(e, value)=>{if(window.SuperGlobal.auth[0])setRatingDish(value);  e.stopPropagation()}}/>
+            <Rating name="customized-10" defaultValue={rating} precision={0.1} max={10} value={rating} onClick={(event, value)=>{ changeRating(id, value); event.stopPropagation();  }}/>
             </Stack>
           <Typography variant="body2" color="text.secondary">
             {description}
@@ -123,12 +64,13 @@ function outBasket(id, ins){{
       <CardActions sx={{position:"absolute", bottom: "0", right:"0"}}>
         <Typography sx={{left:"0"}}>Цена: {price} </Typography>
         { {amount}>0 && <>
-        <Button size="small" onClick={()=>{} /*OnBasket(id)*/}><RemoveCircleOutlineIcon/></Button>
+        <Button size="small" onClick={(event)=>{event.stopPropagation(); inBasket(id)} }><RemoveCircleOutlineIcon/></Button>
         <Typography>{amount}</Typography>
-        <Button size="small" onClick={()=>{}/*OutBasket(() => { amount<1? "true": "false"})*/}><ControlPointIcon/></Button>
+        <Button size="small" onClick={(event)=>{event.stopPropagation(); outBasket(id, () => { amount<1? "true": "false"})} }><ControlPointIcon/></Button>
         </>}
-        { {amount} && <>
-        <Button size="small" onClick={()=> {}/*OnBasket()*/}> В корзину </Button>
+        { console.log(amount)}{
+        {amount} && <>
+        <Button size="small" onClick={(event)=> {event.stopPropagation(); inBasket(id)}}> В корзину </Button>
         </>}
       </CardActions>
       }
