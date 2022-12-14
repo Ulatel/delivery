@@ -1,27 +1,30 @@
 import React, {useEffect, useState } from "react";
 import Center from '../Center'
 import Header from '../app/Header';
-import Item from "../app/Item";
+import Dish from "../app/Dish";
 import ThemeInvetor from "../app/ThemeInvetor";
 import { Box } from '@mui/material';
 import { useSnackbar } from "notistack";
+import { useParams } from "react-router-dom";
 
 import _ from '../../../config'
 import fetchData from "../../utils/fetchData";
 
 export default function ({ }) {
+    const { id } = useParams();
+    console.log(id);
     //const [ ratingDish, setRatingDish ] = useState(rating);
     const { enqueueSnackbar } = useSnackbar();
-    let id = "4ee393fc-af18-4636-be23-08dac7a0ede1";
+    //let id = "4ee393fc-af18-4636-be23-08dac7a0ede1";
     let json;
     const [ children, setChildren ] = useState([]);
     
     useEffect(() => {
     (async () => {
-        
+        console.log(id);
         
         try{
-        json = await fetchData((new URL(`/api/dish/${id}`, _.api_server)), {}, 'GET');
+        json = await fetchData((new URL(`api/dish/${id}`, _.api_server)), {}, 'GET');
         }
         catch(e){
             enqueueSnackbar(e.message, {variant:'error'})
@@ -40,7 +43,7 @@ export default function ({ }) {
         */
         setChildren(((card) => {
 
-            return <Item
+            return <Dish
                     key={json.id}
                     id={json.id}
                     name={json.name}

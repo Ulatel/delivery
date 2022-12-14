@@ -13,6 +13,9 @@ import fetchData from "../../utils/fetchData";
 import { useSnackbar } from "notistack";
 
 import _ from '../../../config';
+import "../../less/pages/main.less";
+
+
 
 export default function({ id, name, category, price, image, vegetarian, rating, description }){
     const [ ratingDish, setRatingDish ] = useState(rating);
