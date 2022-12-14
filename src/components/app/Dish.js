@@ -18,13 +18,13 @@ import "../../less/pages/main.less";
 
 
 export default function({ id, name, category, price, image, vegetarian, rating, description }){
-    const [ ratingDish, setRatingDish ] = useState(rating);
+    const [ ratingDish, setRatingDish ] = useState(0);
     const { enqueueSnackbar } = useSnackbar();
     
     useEffect(() => {
       //setLoading(true);
       
-      (async () => {if(window.SuperGlobal.auth[0]){
+      (async () => {if(window.SuperGlobal.auth[0] && ratingDish){
           let json;
           try{
           json = await fetchData((new URL(`/api/dish/${id}/rating/check`, _.api_server)), {}, 'GET');
@@ -34,11 +34,10 @@ export default function({ id, name, category, price, image, vegetarian, rating, 
               return false;
           }
           //setLoading(false);
-          
-          if (!json) {
-            let json2;
+          console.log(json);
+          if (json.toString()!="false") {
             try{
-            json = await fetchData((new URL(`/api/dish/${id}/rating`, _.api_server)), {ratingDish}, 'POST');
+            await fetchData((new URL(`/api/dish/${id}/rating`, _.api_server)), {ratingDish}, 'POST');
             }
             catch(e){
                 enqueueSnackbar(e.message, {variant:'error'})
@@ -49,7 +48,7 @@ export default function({ id, name, category, price, image, vegetarian, rating, 
       }})();
   }, [ratingDish]);
 
-    return <>(
+    return <>
         <Box sx={{ maxWidth: 600, minWidth: 100, flexGrow: 1, flexShrink: 1, margin:"auto"}}>
         <Typography sx={(theme) => theme.palette.pages.main.H3}>{name}</Typography>
                 
@@ -76,13 +75,13 @@ export default function({ id, name, category, price, image, vegetarian, rating, 
             {description}
           </Typography>
           <Stack spacing={1}>
-            <Rating sx={{margin: "auto"}} name="customized-10" defaultValue={ratingDish} precision={0.1} max={10} value={ratingDish} onChange={(e, value)=>{if(window.SuperGlobal.auth[0])setRatingDish(value)}}/>
+            <Rating sx={{margin: "auto"}} name="customized-10" defaultValue={rating} precision={0.1} max={10} value={rating} 
+              onChange={(e, value)=>{if(window.SuperGlobal.auth[0]) setRatingDish(value); if(!window.SuperGlobal.auth[0]) enqueueSnackbar(e.message, {message: "вы не зарегистрирваны"})}}/>
             </Stack>
 
-            <Typography sx ={{"font-weight": "bold","textAlign": "center"}} variant="body2" color="text.secondary" margin="auto" >
+            <Typography sx ={{"fontWeight": "bold","textAlign": "center"}} variant="body2" color="text.secondary" margin="auto" >
             Цена - {price}
           </Typography>
     </Box>
-  );
     </>;
 }

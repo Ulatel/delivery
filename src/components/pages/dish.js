@@ -12,7 +12,7 @@ import fetchData from "../../utils/fetchData";
 
 export default function ({ }) {
     const { id } = useParams();
-    console.log(id);
+    //console.log(id);
     //const [ ratingDish, setRatingDish ] = useState(rating);
     const { enqueueSnackbar } = useSnackbar();
     //let id = "4ee393fc-af18-4636-be23-08dac7a0ede1";
@@ -21,7 +21,7 @@ export default function ({ }) {
     
     useEffect(() => {
     (async () => {
-        console.log(id);
+        //console.log(id);
         
         try{
         json = await fetchData((new URL(`api/dish/${id}`, _.api_server)), {}, 'GET');
@@ -31,7 +31,7 @@ export default function ({ }) {
             return false;
         }
         //setLoading(false);
-        console.log(json);
+        //console.log(json);
         
         
         /*if (!json.dishes.length) {
@@ -53,7 +53,7 @@ export default function ({ }) {
                     vegetarian={json.vegetarian}
                     rating={json.rating}
                     category={json.category}
-
+                    
                 />;
         }));
     })();

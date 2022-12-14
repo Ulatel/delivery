@@ -11,7 +11,7 @@ import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 export default function ImgMediaCard({ id, name, price, image, amount }) {
     
   return (
-    <Card sx={{ maxWidth: 900, maxWidth: "900px", display: "inline-block", flexWrap: "wrap",  flexFlow: "row wrap", alignItems: "center"}}>
+    <Card sx={{ maxWidth: 900,  alignItems: "stretch", display: "inline-block", flexWrap: "wrap",  flexFlow: "row wrap"}}>
       <CardActions>
       <CardMedia
         component="img"

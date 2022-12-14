@@ -109,7 +109,7 @@ function outBasket(id, ins){{
             Категория блюда - {category}
           </Typography>
           <Stack spacing={1}>
-            <Rating name="customized-10" defaultValue={ratingDish} precision={0.1} max={10} value={ratingDish} onChange={(e, value)=>{if(window.SuperGlobal.auth[0])setRatingDish(value)}}/>
+            <Rating name="customized-10" defaultValue={ratingDish} precision={0.1} max={10} value={ratingDish} onChange={(e, value)=>{if(window.SuperGlobal.auth[0])setRatingDish(value);  e.stopPropagation()}}/>
             </Stack>
           <Typography variant="body2" color="text.secondary">
             {description}
