@@ -112,7 +112,7 @@ export default function({ }){
         </Typography>
       </CardContent>
 
-      <List sx={{ width: '100%', maxWidth: 900, margin: "auto", maxWidth: 900,  alignItems: "stretch", display: "flex", flexWrap: "no-wrap", justifyContent: "space-between",  flexFlow: "row wrap"}} >
+      <List sx={{width: '100%', maxWidth: 900, margin: "auto", maxWidth: 900,  alignItems: "stretch", display: "flex", flexWrap: "wrap", justifyContent: "space-between",  flexFlow: "row wrap"}} >
                 
                 { children }
                 

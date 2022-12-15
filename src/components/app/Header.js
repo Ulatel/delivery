@@ -35,7 +35,7 @@ export default function(){
             profile={window.SuperGlobal.auth[0] && 
             <Button key={'profile'} component={Link} variant='outline' to='/profile' sx={() => {
                 return { backgroundColor: location.pathname == '/profile' ? grey[800] : '' };
-            }}>{nick}</Button>}
+            }}>Профиль</Button>}
             loginButton={window.SuperGlobal.auth[0] ?
                 <IconButton variant='outline' edge='end' onClick={() => {
                     fetchData(new URL(`/api/account/logout`, _.api_server)).then(() => {
