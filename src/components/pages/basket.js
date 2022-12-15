@@ -85,7 +85,7 @@ export default function({ }){
                           }}
 
                           outBasket= {(id, ins)=>{
-                            fetchData(new URL(`/api/basket/dish/${id}`, _.api_server), {dishId : id, inscare: ins}, 'DELETE').then((data) => {
+                            fetchData(new URL(`/api/basket/dish/${id}?increase=${ins}`, _.api_server), {dishId : id, increase: ins}, 'DELETE').then((data) => {
                                 const errors = errorParser(data);
                                 
                                 if (errors.length){

@@ -51,6 +51,7 @@ export default function({ }){
                     }).catch((err) => {
                         enqueueSnackbar(err.message, { variant: 'error' });
                     });
+                    window.SuperGlobal.email = login;
                 }}>Войти</Button>
             </form>
         </Paper>

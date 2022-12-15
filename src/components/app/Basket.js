@@ -30,11 +30,11 @@ export default function({ id, name, price, image, amount, inBasket, outBasket })
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={()=>{outBasket(id, "false")}}><RemoveCircleOutlineIcon/></Button>
+        <Button size="small" onClick={()=>{outBasket(id, "true")}}><RemoveCircleOutlineIcon/></Button>
         <Typography>{amount}</Typography>
         <Button size="small" onClick={()=>{inBasket(id)}} ><ControlPointIcon/></Button>
       </CardActions>
-      <Button sx={{color:"red"}} onClick={()=>{outBasket(id, "true")}} >Удалить</Button>
+      <Button sx={{color:"red"}} onClick={()=>{outBasket(id, "false")}} >Удалить</Button>
       </CardActions>
     </Card>
   );
