@@ -29,6 +29,10 @@ export default function({ id, name, category, price, image, vegetarian, rating, 
             enqueueSnackbar('Задите в аккаунт', {variant:'error'});
             return(0);
           }
+          if(json.toString()=="false"){
+            enqueueSnackbar('Для начала закажите это блюдо!!', {variant:'error'});
+            return(0);
+          }
           let json;
           try{
           json = await fetchData((new URL(`/api/dish/${id}/rating/check`, _.api_server)), {}, 'GET');
@@ -37,10 +41,7 @@ export default function({ id, name, category, price, image, vegetarian, rating, 
               enqueueSnackbar(e.message, {variant:'error'})
               return false;
           }
-          if(json.toString()=="false"){
-            enqueueSnackbar('Для начала закажите это блюдо!!', {variant:'error'});
-            return(0);
-          }
+          
           //setLoading(false);
           console.log(json);
           if (json.toString()!="false") {

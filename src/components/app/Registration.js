@@ -6,9 +6,17 @@ import { Box } from "@mui/system";
 import { Link, useNavigate } from "react-router-dom";
 import MaskedInput from 'react-text-mask'
 import { Button, Input, Paper, Select, MenuItem, Typography } from "@mui/material";
-
+import InputMask from 'react-input-mask';
 import _ from '../../../config';
-
+function PhoneInput(props) {
+    return (
+      <InputMask 
+        mask='+7(999) 999 9999' 
+        value={props.value} 
+        onChange={props.onChange}>
+      </InputMask>
+    );
+    }
 export default function({ }){
     
     const [FIO, setFIO] = useState('');
@@ -18,6 +26,8 @@ export default function({ }){
     const [BirthDate, setBirthDate] = useState('');
     const [login, setLogin] = useState('');
     const [pass, setPass] = useState('');
+    const [phone, setPhone] = useState('');
+  const handleInput = ({ target: { value } }) => setPhone(value);
     
     const nav = useNavigate();
     
@@ -36,15 +46,13 @@ export default function({ }){
                             <MenuItem value={"Male"}>Мужской</MenuItem>
                             <MenuItem value={"Female"}>Женский</MenuItem>
                         </Select>
-                        <MaskedInput
-                            placeholder="введите номер телефона"
-                            guide={false}
-                            onChange={(e) => setPhoneNumber(e.target.value)}
-                            mask={['+','7','(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-                        />
+                        
                 <Typography >Телефон</Typography>
-                <Input required placeholder='+7(ххх) ххх-хх-хх' type='number' value={PhoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} fullWidth />
-                <Box sx={{ height: '0.5em' }} />
+                
+                <PhoneInput 
+        value={phone} 
+        onChange={handleInput}>
+      </PhoneInput>
                 <Typography >День рождения</Typography>
                 <Input  type='date' value={BirthDate}  min="1900-01-01" max="2022-12-12" onChange={(e) => setBirthDate(e.target.value) } fullWidth />
                 <Box sx={{ height: '0.5em' }}/>
@@ -84,10 +92,17 @@ export default function({ }){
                         enqueueSnackbar(`Пароль должен быть больше 6 символов`, { variant: 'error' });
                         return 0;
                     }
-
+                    var regex;var matches ;
+                    regex = /_/;
+                    matches=phone.match(regex);
+                    if(matches){
+                        enqueueSnackbar(`Введите телефон полностью`, { variant: 'error' });
+                        return 0;
+                    }
+                    
                     
 
-                    if(!FIO || !pass || !login ||!Adress || !BirthDate || !Male || !PhoneNumber){
+                    if(!FIO || !pass || !login ||!Adress || !BirthDate || !Male || !phone){
                         enqueueSnackbar(`Все поля должны быть заполнены!!`, { variant: 'error' });
                         return 0;
                     }
@@ -98,7 +113,7 @@ export default function({ }){
                         address: Adress,
                         birthDate: BirthDate.toString(),
                         gender: Male,
-                        phoneNumber: PhoneNumber.toString()
+                        phoneNumber: phone
                     }).then((data) => {
                         //обработчик ошибок запросов 
                         const errors = errorParser(data);
