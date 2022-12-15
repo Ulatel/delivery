@@ -20,8 +20,10 @@ import _ from '../../../config'
 export default function({ }){
     let params = new URLSearchParams(location.search);
     const page = parseInt(params.get("page")??"1");
-
-
+    let a = (params.toString());
+    console.log(a);
+    a = a.replace(/page=\d+&?/, '');
+    console.log(a);
     const [ currPage, setCurrPage ] = useState(page ?? 1);
     const [ pageCount, setPageCount ] = useState(1);
     const [ filters, setFilters ] = useState("");
@@ -29,21 +31,23 @@ export default function({ }){
     const [ isNull, setNull ] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
     const nav = useNavigate();
-    const [ urlPag, setURLpag] = useState(new URLSearchParams([["page", page]]));
-    console.log(params.getAll("categories", "sorting", "vegetarian")??"");
-    
-    const [ urlFilt, setURLfilt] = useState(params.delete("page")??"");
+    const [ urlPag, setURLpag] = useState(`?page=${page}`);
+    //console.log(params.getAll("categories", "sorting", "vegetarian")??"");
+    //params.delete("page");
+    //let regex = /\&.*/;
+    //let matches = a.match(regex);
+    //console.log((params).toString());
+    const [ urlFilt, setURLfilt] = useState(a);
     
     useEffect(() => {
         //setLoading(true);
         
         (async () => {
             setCurrPage(page);
-            setURLpag(new URLSearchParams(params.get("page")??"1"));
             let json;
-            console.log(currPage);
+            console.log(urlPag.toString()+urlFilt.toString());
             try{
-            json = await fetchData((new URL(`/api/dish/?${urlPag + "&"}${urlFilt}`, _.api_server)), {}, 'GET');
+            json = await fetchData((new URL(`/api/dish/${urlPag}${"&"+urlFilt}`, _.api_server)), {}, 'GET');
             }
             catch(e){
                 enqueueSnackbar(e.message, {variant:'error'})
@@ -139,7 +143,7 @@ export default function({ }){
                     />;
             }));
         })();
-    }, [currPage, urlFilt]);
+    }, [urlFilt, urlPag, urlFilt]);
 
     console.log(page);
     return <>
