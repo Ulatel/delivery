@@ -72,7 +72,7 @@ export default function LimitTags({urlPag, setURL, setURLpag, setCurrPage}) {
       //sort && params.set("sorting", sort);
       //filt[0] && params.set("categories", filt);
       //vegetarian && params.set("vegetarian", vegetarian);
-      console.log(a);
+      //console.log(a);
       setURL(a);
       setURLpag(`?page=${1}`); 
       setCurrPage(1);

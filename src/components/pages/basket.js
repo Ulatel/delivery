@@ -43,7 +43,7 @@ export default function({ }){
                 return false;
             }
             //setLoading(false);
-            console.log(json);
+            //console.log(json);
             
             if (!json) {
                 setNull(true);
@@ -81,7 +81,7 @@ export default function({ }){
                             }).catch((e) => {
                                 enqueueSnackbar(e.message, { variant: 'error' });
                             });
-                            console.log("в корзину")
+                            //console.log("в корзину")
                           }}
 
                           outBasket= {(id, ins)=>{
@@ -100,7 +100,7 @@ export default function({ }){
                                 enqueueSnackbar(e.message, { variant: 'error' });
                             });
                             setUpdate("1");
-                            console.log("из корзины")
+                            //console.log("из корзины")
                           }}
                     />;
             }));

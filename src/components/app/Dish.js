@@ -43,7 +43,7 @@ export default function({ id, name, category, price, image, vegetarian, rating, 
           }
           
           //setLoading(false);
-          console.log(json);
+          //console.log(json);
           if (json.toString()!="false") {
             try{
             await fetchData((new URL(`/api/dish/${id}/rating`, _.api_server)), {ratingDish}, 'POST');
@@ -58,7 +58,7 @@ export default function({ id, name, category, price, image, vegetarian, rating, 
   }, [ratingDish]);
 
     return <>
-        <Box sx={{ maxWidth: 600, minWidth: 100, flexGrow: 1, flexShrink: 1, margin:"auto"}}>
+        <Box sx={{ maxWidth: 600, minWidth: 100, flexGrow: 1,flexWrap:"wrap",  margin:"auto"}}>
         <Typography sx={(theme) => theme.palette.pages.main.H3}>{name}</Typography>
                 
         <Box sx={{position: "relative"}}><CardMedia

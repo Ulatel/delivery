@@ -21,9 +21,9 @@ export default function({ }){
     let params = new URLSearchParams(location.search);
     const page = parseInt(params.get("page")??"1");
     let a = (params.toString());
-    console.log(a);
+    //console.log(a);
     a = a.replace(/page=\d+&?/, '');
-    console.log(a);
+    //console.log(a);
     const [ currPage, setCurrPage ] = useState(page ?? 1);
     const [ pageCount, setPageCount ] = useState(1);
     const [ filters, setFilters ] = useState("");
@@ -45,7 +45,7 @@ export default function({ }){
         (async () => {
             setCurrPage(page);
             let json;
-            console.log(urlPag.toString()+urlFilt.toString());
+            //console.log(urlPag.toString()+urlFilt.toString());
             try{
             json = await fetchData((new URL(`/api/dish/${urlPag}${"&"+urlFilt}`, _.api_server)), {}, 'GET');
             }
@@ -55,7 +55,7 @@ export default function({ }){
             }
             //console.log((new URL('/api/dish/?${urlFilt}${urlPag}', _.api_server).toString));
             //setLoading(false);
-            console.log(json);
+            //console.log(json);
             setPageCount(json?.pagination?.count);
             
             if (!json.dishes.length) {
@@ -91,8 +91,8 @@ export default function({ }){
                                 return false;
                             }
                             //setLoading(false);
-                            console.log(json)
-                            console.log(val);
+                            //console.log(json)
+                            //console.log(val);
                             if (json) {
                                 try{
                                 fetchData((new URL(`/api/dish/${id}/rating`, _.api_server)), {val}, 'POST');
@@ -108,7 +108,7 @@ export default function({ }){
                                 enqueueSnackbar(`вы этого не заказывали`, { variant: 'error' });
                             }
                         }}
-                        inBasket={(id)=>{if(window.SuperGlobal.auth[0]){
+                        inBasket={(id)=>{if(!window.SuperGlobal.auth[0]){
                             enqueueSnackbar('Задите в аккаунт', {variant:'error'});
                             return(0);
                           }
@@ -126,10 +126,10 @@ export default function({ }){
                             }).catch((e) => {
                                 enqueueSnackbar(e.message, { variant: 'error' });
                             });
-                            console.log("в корзину")
+                            //console.log("в корзину")
                           }}
 
-                          outBasket= {(id, ins)=>{if(window.SuperGlobal.auth[0]){
+                          outBasket= {(id, ins)=>{if(!window.SuperGlobal.auth[0]){
                             enqueueSnackbar('Задите в аккаунт', {variant:'error'});
                             return(0);
                           }
@@ -148,14 +148,14 @@ export default function({ }){
                                 enqueueSnackbar(e.message, { variant: 'error' });
                             });
                           
-                            console.log("из корзины")
+                            //console.log("из корзины")
                           }}
                     />;
             }));
         })();
     }, [urlFilt, urlPag, urlFilt]);
 
-    console.log(page);
+    //console.log(page);
     return <>
         <Box sx={(theme) => theme.palette.pages.main.Main.bg}>
             <Header/>

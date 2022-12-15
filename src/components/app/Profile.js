@@ -47,7 +47,7 @@ export default function({ }){
                 enqueueSnackbar(e.message, {variant:'error'})
                 return false;
             }
-            console.log(phone);
+            //console.log(phone);
             setAdress(json.address);
             setBirthDate(json.birthDate);
             setFIO(json.fullName);
