@@ -63,16 +63,20 @@ export default function LimitTags({urlPag, setURL, setURLpag, setCurrPage}) {
     
     <Button variant='contained' type='submit' onClick={(e)=>{
       e.preventDefault();
-      
-
-      let params = new URLSearchParams();
-      sort && params.set("sorting", sort);
-      filt[0] && params.set("categories", filt);
-      vegetarian && params.set("vegetarian", vegetarian);
-      setURL(params);
-      setURLpag(new URLSearchParams([["page", 1]])); 
+      let a="";
+      if(sort!="") a+="&sorting="+sort;
+      if(vegetarian!="") a+="&vegetarian="+vegetarian;
+      if(filt!=[]) for(let i = 0;i<filt.length;i++)
+        a+="&categories="+filt[i];
+      //let params = new URLSearchParams();
+      //sort && params.set("sorting", sort);
+      //filt[0] && params.set("categories", filt);
+      //vegetarian && params.set("vegetarian", vegetarian);
+      console.log(a);
+      setURL(a);
+      setURLpag(`?page=${1}`); 
       setCurrPage(1);
-      nav(`/?page=1&${params}`);
+      nav(`/?page=1${a}`);
     }}>Применить</Button>
     </Box>
   );

@@ -29,6 +29,27 @@ export default function({ }){
                 <Button variant='contained' type='submit' sx={{ marginRight: '0.25em' }} onClick={(e) => {
                     e.preventDefault();
                     
+                    var regex;var matches ;
+                    regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                    matches=login.match(regex);
+                    if(!matches){
+                        enqueueSnackbar(`Введите корректную почту`, { variant: 'error' });
+                        return 0;
+                    }
+                    regex = /\d+/g;
+                    matches = pass.match(regex);
+
+                    
+
+                    if(pass.length<6){
+                        enqueueSnackbar(`Пароль должен быть больше 6 символов`, { variant: 'error' });
+                        return 0;
+                    }
+
+                    if( !pass || !login ){
+                        enqueueSnackbar(`Все поля должны быть заполнены!!`, { variant: 'error' });
+                        return 0;
+                    }
                     fetchData(new URL(`/api/account/login`, _.api_server), {
                         email: login,
                         password: pass,

@@ -51,7 +51,7 @@ export default function({ }){
             setUpdate("")
             setDeliverTime(json.deliveryTime);
             setOrderTime(json.orderTime);
-            setPrice(json.prise);
+            setPrice(json.priсe);
             setStatus(json.status);
             //setLoading(false);
             console.log(json);
@@ -86,7 +86,7 @@ export default function({ }){
       
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Заказ  #{}
+          Заказ  {}
         </Typography>
         <Typography variant="body2" color="text.secondary">
         Дата заказа: {((orderTime).slice(0, 10).replaceAll('-','.'))} </Typography>

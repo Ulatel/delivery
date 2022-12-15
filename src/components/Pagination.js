@@ -13,9 +13,10 @@ export default function PaginationRounded({pageid, urlFilt, count, setCurrPage, 
       shape="rounded" 
       
       onChange={(event, page)=>{
-        nav(`/?${urlFilt && "&"}page=${page}`);
-        setURL(new URLSearchParams([["page", page]]));
+        
+        setURL(`?page=${page}`);
         setCurrPage(page);
+        nav(`/?page=${page}&${urlFilt}`);
       }} 
       page={pageid}/>
       {/*<Pagination count={10} variant="outlined" shape="rounded" />*/}
