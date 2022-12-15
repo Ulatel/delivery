@@ -60,7 +60,8 @@ export default function ({id,name,category,price,image,vegetarian,rating, descri
         {<Box sx={{height: "30px"}}/>}
       </CardActionArea>
 
-        {
+      {(window.SuperGlobal.auth[0])&&
+                                
       <CardActions sx={{position:"absolute", bottom: "0", right:"0"}}>
         <Typography sx={{left:"0"}}>Цена: {price} </Typography>
         { inBa>0 && <>
@@ -70,7 +71,7 @@ export default function ({id,name,category,price,image,vegetarian,rating, descri
         </>}
         {
         (inBa==0) && <>
-        <Button size="small" onClick={(event)=> {event.stopPropagation(); inBasket(id); setInBa(inBa+1)}}> В корзину </Button>
+        <Button size="small" onClick={(event)=> {if(window.SuperGlobal.auth[0]){event.stopPropagation(); inBasket(id); setInBa(inBa+1)} else nav(`/login`)}}> В корзину </Button>
         </>}
       </CardActions>
       }

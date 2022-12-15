@@ -109,7 +109,7 @@ export default function(prefersDarkMode){
                         },
                     },
                     
-                    Movie: {
+                    Dish: {
                         bg: {
                             background: mode ? '#333' : '#ffffff',
                             border: '1px solid ' + (mode ? '#555' : 'grey'),
@@ -167,7 +167,7 @@ export default function(prefersDarkMode){
                         },
                     },
                     
-                    MovieCatalog: {
+                    DishCatalog: {
                         bg: {
                             background: mode ? '#333' : '#ffffff',
                             minWidth: '100%',
