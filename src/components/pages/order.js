@@ -54,8 +54,8 @@ export default function({ }){
             setPrice(json.priсe);
             setStatus(json.status);
             //setLoading(false);
-            console.log(json);
-            console.log(1);
+            //console.log(json);
+            //console.log(1);
             if (!json) {
                 setNull(true);
                 enqueueSnackbar( 'No dishes', { variant: 'warning' });

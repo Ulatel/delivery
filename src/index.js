@@ -82,7 +82,7 @@ $(function(){//сразу после загрузки страницы из-за
             { path: '*', element: <NotFound /> },
         ]);
         
-        console.log(theme);
+        //console.log(theme);
         
         return (
             <ThemeProvider theme={theme}>

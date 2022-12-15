@@ -10,7 +10,7 @@ import { useSnackbar } from "notistack";
 
 export default function({ id, name, totalPrice, price, amount, image}) {
     return <>
-    <Card sx={{  flexDirection: "column",maxWidth: 900,  alignItems: "stretch", display: "flex", flexWrap: "wrap", justifyContent: "space-between",  flexFlow: "row wrap"}}>
+    <Card sx={{  flexDirection: "column", position: "relative", flexWrap: "wrap",  flexFlow: "row wrap", alignItems: "stretch", maxWidth: 900,  alignItems: "stretch", display: "flex", flexWrap: "wrap", justifyContent: "space-between",  flexFlow: "row wrap"}}>
       <CardActions sx={{  flexDirection: "column",maxWidth: 900,  alignItems: "stretch", display: "flex", flexWrap: "no-wrap", justifyContent: "space-between",  flexFlow: "row wrap"}}>
       <CardMedia
         component="img"
