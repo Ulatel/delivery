@@ -28,7 +28,7 @@ export default function({ }){
     const [ children, setChildren ] = useState([]);
     const [ orderTime, setOrderTime ] = useState("");
     const [ deliveryTime, setDeliverTime ] = useState("");
-    const [ price, setPrice ] = useState("");
+    const [ price1, setPrice ] = useState(0);
     const [ status, setStatus ] = useState("");
     const [ update, setUpdate ] = useState("");
     const [ isNull, setNull ] = useState(false);
@@ -48,33 +48,35 @@ export default function({ }){
                 enqueueSnackbar(e.message, {variant:'error'})
                 return false;
             }
-            setUpdate("")
-            setDeliverTime(json.deliveryTime);
-            setOrderTime(json.orderTime);
-            setPrice(json.priсe);
-            setStatus(json.status);
-            //setLoading(false);
-            //console.log(json);
-            //console.log(1);
             if (!json) {
                 setNull(true);
                 enqueueSnackbar( 'No dishes', { variant: 'warning' });
                 
                 return false;
             }
+            setDeliverTime(json.deliveryTime);
+            setOrderTime(json.orderTime);
+            setPrice(json.priсe);
+            setStatus(json.status);
+            //setLoading(false);
+            console.log(price1);
+            //console.log(1);
+            let a=0;
             
             setChildren(json.dishes.map((card) => {
-
+                a+=parseInt(card.totalPrice);
                 return <Order
                         key={card.id}
                         id={card.id}
                         name={card.name}
                         totalPrice={card.totalPrice}
-                        price={card.totalPrice}
+                        price={card.price}
                         amount={card.amount}
                         image={card.image}
                     />;
             }));
+            setPrice(a);
+            //setUpdate("")
         })();
     }, [id, update]);
 
@@ -91,7 +93,7 @@ export default function({ }){
         <Typography variant="body2" color="text.secondary">
         Дата заказа: {((orderTime).slice(0, 10).replaceAll('-','.'))} </Typography>
         <Typography variant="body2" color="text.secondary"> Дата доставки: {((deliveryTime).slice(0, 10).replaceAll('-','.'))}</Typography>
-        <Typography variant="body2" color="text.secondary">Статус заказа - {status}</Typography>
+        <Typography   variant="body2" color="text.secondary">Статус заказа - {(status=="Delivered")&&"Доставлено"||status!="Delivered"&&"В пути"}</Typography>
         
         
       </CardContent>
@@ -107,12 +109,12 @@ export default function({ }){
                                 }  
                                 setUpdate("1");
                         }}>Подтвердить заказ</Button>}
-      <Typography variant="body2" color="text.secondary" margin="right">
-          Цена:  {price}
+      <Typography fontWeight="bold" variant="body2" color="text.secondary" margin="right">
+          Цена:  {price1}
         </Typography>
       </CardContent>
 
-      <List sx={{width: '100%', maxWidth: 900, margin: "auto", maxWidth: 900,  alignItems: "stretch", display: "flex", flexWrap: "wrap", justifyContent: "space-between",  flexFlow: "row wrap"}} >
+      <List sx={{width: '100%', maxWidth: 900, margin: "auto"}} >
                 
                 { children }
                 

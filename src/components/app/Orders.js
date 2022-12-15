@@ -22,7 +22,7 @@ export default function({ id, name, price, deliveryTime, orderTime, status, conf
           Заказ  от {new Intl.DateTimeFormat().format(Date.parse(orderTime))}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Статус заказа - {status}
+          Статус заказа - {(status=="Delivered")&&"Доставлено"||status!="Delivered"&&"В пути"}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Доставлен:  {new Intl.DateTimeFormat().format(Date.parse(deliveryTime))}

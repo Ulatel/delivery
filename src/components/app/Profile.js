@@ -52,6 +52,7 @@ export default function({ }){
             setBirthDate(json.birthDate);
             setFIO(json.fullName);
             setMale(json.gender);
+            setLogin(json.email);
             setPhone(json.phoneNumber);
         })();
     }, []);
@@ -64,7 +65,7 @@ export default function({ }){
                 
                 <Input required placeholder='ФИО' type='text' value={FIO} onChange={(e) => setFIO(e.target.value)} fullWidth />
                 <Box sx={{ height: '0.5em' }} />
-                <Typography >Пол:  {Male}</Typography>
+                <Typography >Пол:  {(Male=="Male")&&"Мужчина"||Male!="Male"&&"Женщина"}</Typography>
                 
 
                 <Typography >Телефон</Typography>
@@ -78,7 +79,7 @@ export default function({ }){
                 <Box sx={{ height: '0.5em' }}/>
                 <Input required placeholder='Адресс' type='text' value={Adress} onChange={(e) => setAdress(e.target.value)} fullWidth />
                 <Box sx={{ height: '0.5em' }} />
-                <Input disabled placeholder='Почта' type='email' value={login} onChange={(e) => setLogin(e.target.value)} fullWidth />
+                <Input disabled placeholder={login} type='email' defaultValue={login} onChange={(e) => setLogin(e.target.value)} fullWidth />
                     
                 
                 <Box sx={{ height: '1.5em' }} />
