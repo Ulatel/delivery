@@ -78,6 +78,10 @@ export default function({ }){
                         rating={card.rating}
                         category={card.category}
                         changeRating={async(id, val)=> {
+                            if(!window.SuperGlobal.auth[0]){
+                                enqueueSnackbar('Задите в аккаунт', {variant:'error'});
+                                return(0);
+                              }
                             let json;
                             try{
                             json = await fetchData((new URL(`/api/dish/${id}/rating/check`, _.api_server)), {}, 'GET');
@@ -104,7 +108,10 @@ export default function({ }){
                                 enqueueSnackbar(`вы этого не заказывали`, { variant: 'error' });
                             }
                         }}
-                        inBasket={(id)=>{
+                        inBasket={(id)=>{if(window.SuperGlobal.auth[0]){
+                            enqueueSnackbar('Задите в аккаунт', {variant:'error'});
+                            return(0);
+                          }
                             fetchData(new URL(`/api/basket/dish/${id}`, _.api_server), {dishId : id}, 'POST').then((data) => {
                                 const errors = errorParser(data);
                                 
@@ -122,7 +129,10 @@ export default function({ }){
                             console.log("в корзину")
                           }}
 
-                          outBasket= {(id, ins)=>{
+                          outBasket= {(id, ins)=>{if(window.SuperGlobal.auth[0]){
+                            enqueueSnackbar('Задите в аккаунт', {variant:'error'});
+                            return(0);
+                          }
                             fetchData(new URL(`/api/basket/dish/${id}`, _.api_server), {dishId : id, inscare: ins}, 'DELETE').then((data) => {
                                 const errors = errorParser(data);
                                 
@@ -154,7 +164,7 @@ export default function({ }){
             <Box padding={2} sx={{display: "flex", flexWrap: "wrap", gap: 2, flexFlow: "row wrap", alignItems: "stretch", justifyContent: "center"}}>
                 
                 { children
-                /* <Movie page={parseInt(id ?? 1)} /> */}
+                /* <Dish page={parseInt(id ?? 1)} /> */}
             </Box>
             <Box sx={{display: "table", margin: "0 auto"}}>
                 <PaginationRounded urlFilt={urlFilt} pageid={currPage} count={pageCount} setCurrPage ={setCurrPage} setURL={setURLpag} />

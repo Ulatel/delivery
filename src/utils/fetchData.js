@@ -1,22 +1,29 @@
+import errorParser from "./errorParser";
+
 export default async function(url = '', data = {}, method = 'POST'){
     const response = await fetch(url, {
         method: method,
         cache: 'no-cache',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem("movieToken")}`,
+            'Authorization': `Bearer ${localStorage.getItem("dishToken")}`,
         },
         redirect: 'follow',
         body: method == 'GET' ? undefined : JSON.stringify(data),
     });
-    
+
     if (response.status === 401){
-        localStorage.removeItem('movieToken');
+        localStorage.removeItem('dishToken');
         window.location = '/login';
     }
 
     if (!response.ok){
-        throw new Error(response.message ?? response.statusText);
+        let errors = errorParser(await response.json());
+        if(!errors.length)
+        throw new Error((response.message) ?? response.statusText);
+        else {
+            throw new Error(errors.join(","));
+        }
     }
     
     try {
@@ -24,4 +31,7 @@ export default async function(url = '', data = {}, method = 'POST'){
     } catch (e) {
         return {};
     }
+         
+    
+    
 }

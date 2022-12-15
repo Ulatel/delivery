@@ -122,7 +122,7 @@ export default function({ }){
                         }
                         //пришел ли токен
                         if (data.token){
-                            localStorage.setItem('movieToken', data.token);
+                            localStorage.setItem('dishToken', data.token);
                             window.SuperGlobal.auth[1](true);
                             nav('/');
                         }

@@ -24,7 +24,11 @@ export default function({ id, name, category, price, image, vegetarian, rating, 
     useEffect(() => {
       //setLoading(true);
       
-      (async () => {if(window.SuperGlobal.auth[0] && ratingDish){
+      (async () => {if(ratingDish){
+          if(!window.SuperGlobal.auth[0]){
+            enqueueSnackbar('Задите в аккаунт', {variant:'error'});
+            return(0);
+          }
           let json;
           try{
           json = await fetchData((new URL(`/api/dish/${id}/rating/check`, _.api_server)), {}, 'GET');
@@ -32,6 +36,10 @@ export default function({ id, name, category, price, image, vegetarian, rating, 
           catch(e){
               enqueueSnackbar(e.message, {variant:'error'})
               return false;
+          }
+          if(json.toString()=="false"){
+            enqueueSnackbar('Для начала закажите это блюдо!!', {variant:'error'});
+            return(0);
           }
           //setLoading(false);
           console.log(json);

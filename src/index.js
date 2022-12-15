@@ -40,12 +40,12 @@ $(function(){//сразу после загрузки страницы из-за
         const theme = React.useMemo(() => createTheme(style(window.SuperGlobal.darkMode[1] || prefersDarkMode)), [prefersDarkMode, window.SuperGlobal.darkMode[0]]);//устанавливает
         
         //window.SuperGlobal.auth =  useState(true);//аутентификация
-        window.SuperGlobal.auth = useState(localStorage.getItem('movieToken') ? true : false);//аутентификация
+        window.SuperGlobal.auth = useState(localStorage.getItem('dishToken') ? true : false);//аутентификация
         window.SuperGlobal.syncProfile = useState({});
         
         useMemo(() => {
             if (window.SuperGlobal.auth[0]){
-                window.SuperGlobal.token = localStorage.getItem('movieToken');
+                window.SuperGlobal.token = localStorage.getItem('dishToken');
                 //window.SuperGlobal.profile = fetchData(new URL(`/api/account/profile`, _.api_server), {}, 'GET').catch(() => {
                     //enqueueSnackbar(e.message, { variant: 'error' });
                 //});
@@ -75,7 +75,7 @@ $(function(){//сразу после загрузки страницы из-за
                     element: <El.default />,
                 };
             })),
-            // { path: '/movie/:id', element: <Movie/> },//нужны доп аргументы, например id
+            // { path: '/dish/:id', element: <Dish/> },//нужны доп аргументы, например id
             { path: '/?page=:page', element: <Main /> },
             { path: '/dish/:id', element: <Dish/> },
             { path: '/order/:id', element: <Order/> },

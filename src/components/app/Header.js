@@ -40,7 +40,7 @@ export default function(){
                 <IconButton variant='outline' edge='end' onClick={() => {
                     fetchData(new URL(`/api/account/logout`, _.api_server)).then(() => {
                         enqueueSnackbar('Logouted', { variant: 'success' });
-                        localStorage.removeItem('movieToken');
+                        localStorage.removeItem('dishToken');
                         window.SuperGlobal.auth[1](false);
                         nav('/');
                     })
