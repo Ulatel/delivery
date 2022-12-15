@@ -51,8 +51,8 @@ export default function LimitTags({urlPag, setURL, setURLpag, setCurrPage}) {
         >
           <MenuItem value={"NameAsc"}>A-Я</MenuItem>
           <MenuItem value={"NameDesc"}>Я-А</MenuItem>
-          <MenuItem value={"PriceAsc"}>Сначала дорогие</MenuItem>
-          <MenuItem value={"PriceDesc"}>Сначала дешёвые</MenuItem>
+          <MenuItem value={"PriceDesc"}>Сначала дорогие</MenuItem>
+          <MenuItem value={"PriceAsc"}>Сначала дешёвые</MenuItem>
           <MenuItem value={"RatingAsc"}>Сначала популярные</MenuItem>
           <MenuItem value={"RatingDesc"}>Сначала непопулярные</MenuItem>
         </Select>

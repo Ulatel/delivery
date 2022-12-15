@@ -21,6 +21,7 @@ export default function({ }){
     let params = new URLSearchParams(location.search);
     const page = parseInt(params.get("page")??"1");
 
+
     const [ currPage, setCurrPage ] = useState(page ?? 1);
     const [ pageCount, setPageCount ] = useState(1);
     const [ filters, setFilters ] = useState("");
@@ -28,8 +29,10 @@ export default function({ }){
     const [ isNull, setNull ] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
     const nav = useNavigate();
-    const [ urlPag, setURLpag] = useState(new URLSearchParams([["page", 1]]));
-    const [ urlFilt, setURLfilt] = useState(new URLSearchParams(params.getAll("categories", "sorting", "vegetarian")??""));
+    const [ urlPag, setURLpag] = useState(new URLSearchParams([["page", page]]));
+    console.log(params.getAll("categories", "sorting", "vegetarian")??"");
+    
+    const [ urlFilt, setURLfilt] = useState(params.delete("page")??"");
     
     useEffect(() => {
         //setLoading(true);
@@ -40,13 +43,13 @@ export default function({ }){
             let json;
             console.log(currPage);
             try{
-            json = await fetchData((new URL('/api/dish/?'+urlPag.toString()+"&"+urlFilt.toString(), _.api_server)), {}, 'GET');
+            json = await fetchData((new URL(`/api/dish/?${urlPag + "&"}${urlFilt}`, _.api_server)), {}, 'GET');
             }
             catch(e){
                 enqueueSnackbar(e.message, {variant:'error'})
                 return false;
             }
-            console.log((new URL('/api/dish/?${urlFilt}${urlPag}', _.api_server).toString));
+            //console.log((new URL('/api/dish/?${urlFilt}${urlPag}', _.api_server).toString));
             //setLoading(false);
             console.log(json);
             setPageCount(json?.pagination?.count);
@@ -57,7 +60,7 @@ export default function({ }){
                 
                 return false;
             }
-            console.log(window.SuperGlobal.syncProfile[0]);
+            
             setChildren(json.dishes.map((card) => {
 
                 return <Card
@@ -70,7 +73,6 @@ export default function({ }){
                         vegetarian={card.vegetarian}
                         rating={card.rating}
                         category={card.category}
-                        amount = {0}
                         changeRating={async(id, val)=> {
                             let json;
                             try{
@@ -151,7 +153,7 @@ export default function({ }){
                 /* <Movie page={parseInt(id ?? 1)} /> */}
             </Box>
             <Box sx={{display: "table", margin: "0 auto"}}>
-                <PaginationRounded pageid={currPage} count={pageCount} setCurrPage ={setCurrPage} setURL={setURLpag} />
+                <PaginationRounded urlFilt={urlFilt} pageid={currPage} count={pageCount} setCurrPage ={setCurrPage} setURL={setURLpag} />
             </Box>
         </Box>
     </>;

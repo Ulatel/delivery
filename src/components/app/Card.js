@@ -20,14 +20,13 @@ import { useNavigate } from "react-router-dom";
 import _ from '../../../config'
 
 
-export default function ({id,name,category,price,image,vegetarian,rating, description, amount, outBasket, inBasket, changeRating}) {
+export default function ({id,name,category,price,image,vegetarian,rating, description,  outBasket, inBasket, changeRating}) {
 
 
     const { enqueueSnackbar } = useSnackbar();
     const nav = useNavigate();
-    
+    const [inBa, setInBa] = React.useState(0);
   
-
 
 
 
@@ -64,14 +63,14 @@ export default function ({id,name,category,price,image,vegetarian,rating, descri
         {
       <CardActions sx={{position:"absolute", bottom: "0", right:"0"}}>
         <Typography sx={{left:"0"}}>Цена: {price} </Typography>
-        { {amount}>0 && <>
-        <Button size="small" onClick={(event)=>{event.stopPropagation(); inBasket(id)} }><RemoveCircleOutlineIcon/></Button>
-        <Typography>{amount}</Typography>
-        <Button size="small" onClick={(event)=>{event.stopPropagation(); outBasket(id, () => { amount<1? "true": "false"})} }><ControlPointIcon/></Button>
+        { inBa>0 && <>
+          <Button size="small" onClick={(event)=>{event.stopPropagation();setInBa(inBa-1); outBasket(id, () => { inBa<1? "false": "true"})} }><RemoveCircleOutlineIcon/></Button>
+          <Typography>{inBa}</Typography>
+        <Button size="small" onClick={(event)=>{event.stopPropagation();setInBa(inBa+1); inBasket(id); } }><ControlPointIcon/></Button>
         </>}
-        { console.log(amount)}{
-        {amount} && <>
-        <Button size="small" onClick={(event)=> {event.stopPropagation(); inBasket(id)}}> В корзину </Button>
+        {
+        (inBa==0) && <>
+        <Button size="small" onClick={(event)=> {event.stopPropagation(); inBasket(id); setInBa(inBa+1)}}> В корзину </Button>
         </>}
       </CardActions>
       }

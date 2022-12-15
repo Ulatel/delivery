@@ -18,7 +18,7 @@ export default function(){
     const nav = useNavigate();
     
     const nick = useMemo(() => {
-       return window.SuperGlobal.syncProfile[0]?.fullName
+       return window.SuperGlobal.email
     }, [window.SuperGlobal.syncProfile[0]]);
     
     const location = useLocation();
@@ -52,7 +52,7 @@ export default function(){
                     <IconButton component={Link} variant='outline' to='/login' edge='end'><LoginIcon /></IconButton>
                 </>
                 }
-            themeButton={
+            /*themeButton={
                 <IconButton onClick={(e) => {
                     e.preventDefault();
                     
@@ -64,7 +64,7 @@ export default function(){
                 }}>
                     {window.SuperGlobal.darkMode[0] ? <Brightness4 /> : <ModeNight />}
                 </IconButton>
-            }
+            }*/
         >
         
             { <>

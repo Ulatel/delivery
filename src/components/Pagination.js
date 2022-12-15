@@ -3,7 +3,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { useNavigate } from "react-router-dom";
 
-export default function PaginationRounded({pageid, count, setCurrPage, setURL}) {
+export default function PaginationRounded({pageid, urlFilt, count, setCurrPage, setURL}) {
   const nav = useNavigate();
 
   return (
@@ -13,7 +13,7 @@ export default function PaginationRounded({pageid, count, setCurrPage, setURL}) 
       shape="rounded" 
       
       onChange={(event, page)=>{
-        nav(`/?page=${page}`);
+        nav(`/?${urlFilt && "&"}page=${page}`);
         setURL(new URLSearchParams([["page", page]]));
         setCurrPage(page);
       }} 
