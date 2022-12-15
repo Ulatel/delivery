@@ -59,6 +59,7 @@
     "express": "^4.18.1",
     "express-ws": "^5.0.2",
     "patch-package": "^6.4.7",
+    "react-input-mask": "^2.0.4",
     "react-text-mask": "^5.5.0"
   },
   "overrides": {

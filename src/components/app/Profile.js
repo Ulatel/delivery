@@ -6,7 +6,16 @@ import { Box } from "@mui/system";
 import { json, Link, useNavigate } from "react-router-dom";
 import MaskedInput from 'react-text-mask'
 import { Button, Input, Paper, Select, MenuItem, Typography } from "@mui/material";
-
+import InputMask from 'react-input-mask';
+function PhoneInput(props) {
+  return (
+    <InputMask 
+      mask='+7(999) 999 9999' 
+      value={props.value} 
+      onChange={props.onChange}>
+    </InputMask>
+  );
+  }
 import _ from '../../../config';
 
 export default function({ }){
@@ -20,6 +29,9 @@ export default function({ }){
     const [pass, setPass] = useState('');
     
     const nav = useNavigate();
+    const [phone, setPhone] = useState('');
+  const handleInput = ({ target: { value } }) => setPhone(value);
+ 
     
     const { enqueueSnackbar } = useSnackbar();//вывод уведомлений
     
@@ -35,12 +47,12 @@ export default function({ }){
                 enqueueSnackbar(e.message, {variant:'error'})
                 return false;
             }
-            
+            console.log(phone);
             setAdress(json.address);
             setBirthDate(json.birthDate);
             setFIO(json.fullName);
             setMale(json.gender);
-            setPhoneNumber(json.phoneNumber);
+            setPhone(json.phoneNumber);
         })();
     }, []);
 
@@ -54,14 +66,12 @@ export default function({ }){
                 <Box sx={{ height: '0.5em' }} />
                 <Typography >Пол:  {Male}</Typography>
                 
-                        <MaskedInput
-                            placeholder="введите номер телефона"
-                            guide={false}
-                            onChange={(e) => setPhoneNumber(e.target.value)}
-                            mask={['+','7','(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-                        />
+
                 <Typography >Телефон</Typography>
-                <Input required placeholder='+7(ххх) ххх-хх-хх' type='number' value={PhoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} fullWidth />
+                <PhoneInput 
+        value={phone} 
+        onChange={handleInput}>
+      </PhoneInput>
                 <Box sx={{ height: '0.5em' }} />
                 <Typography >День рождения</Typography>
                 <Input  type='date' defaultValue={BirthDate}  min="1900-01-01" max="2022-12-12" onChange={(e) => setBirthDate(e.target.value) } fullWidth />
@@ -82,10 +92,17 @@ export default function({ }){
                         return 0;
                     }
                     
+                    var regex;var matches ;
+                    regex = /_/;
+                    matches=phone.match(regex);
+                    if(matches){
+                        enqueueSnackbar(`Введите телефон полностью`, { variant: 'error' });
+                        return 0;
+                    }
                     
 
 
-                    if(!FIO || !Adress || !BirthDate || !Male || !PhoneNumber){
+                    if(!FIO || !Adress || !BirthDate || !Male || !phone){
                         enqueueSnackbar(`Все поля должны быть заполнены!!`, { variant: 'error' });
                         return 0;
                     }
@@ -94,7 +111,7 @@ export default function({ }){
                         address: Adress,
                         birthDate: BirthDate.toString(),
                         gender: Male,
-                        phoneNumber: PhoneNumber.toString()
+                        phoneNumber: phone.toString()
                     }, 'PUT').then((data) => {
                         //обработчик ошибок запросов 
                         const errors = errorParser(data);
@@ -109,7 +126,7 @@ export default function({ }){
                             window.SuperGlobal.auth[1](true);
                             nav('/');
                         }
-                        
+                        enqueueSnackbar(`Аккаунт обновлен!`, { variant: 'success' });
                         return true;
                     }).catch((err) => {
                         enqueueSnackbar(err.message, { variant: 'error' });
