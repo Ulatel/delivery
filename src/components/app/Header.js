@@ -5,6 +5,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ModeNight from "@mui/icons-material/ModeNight";
 import Brightness4 from '@mui/icons-material/Brightness4';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { useSnackbar } from "notistack";
 import { grey } from "@mui/material/colors";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -17,7 +18,7 @@ export default function(){
     const nav = useNavigate();
     
     const nick = useMemo(() => {
-       return window.SuperGlobal.syncProfile[0]?.nickName
+       return window.SuperGlobal.email
     }, [window.SuperGlobal.syncProfile[0]]);
     
     const location = useLocation();
@@ -30,20 +31,28 @@ export default function(){
                     display: { xs: 'none', md: 'unset' },
 
                 };
-            }}>Eat Catalog</Button>}
-            logined={window.SuperGlobal.auth[0] && <Typography>Авторизован как — {nick}</Typography>}
+            }}>Delivery.Кушац</Button>}
+            profile={window.SuperGlobal.auth[0] && 
+            <Button key={'profile'} component={Link} variant='outline' to='/profile' sx={() => {
+                return { backgroundColor: location.pathname == '/profile' ? grey[800] : '' };
+            }}>Профиль</Button>}
             loginButton={window.SuperGlobal.auth[0] ?
                 <IconButton variant='outline' edge='end' onClick={() => {
                     fetchData(new URL(`/api/account/logout`, _.api_server)).then(() => {
                         enqueueSnackbar('Logouted', { variant: 'success' });
-                        localStorage.removeItem('movieToken');
+                        localStorage.removeItem('dishToken');
                         window.SuperGlobal.auth[1](false);
                         nav('/');
                     })
                 }}><LogoutIcon /></IconButton> :
-                <IconButton component={Link} variant='outline' to='/login' edge='end'><LoginIcon /></IconButton>
-            }
-            themeButton={
+                <>
+                    <IconButton key={'registration'} component={Link} variant='outline' to='/registration' sx={() => {
+                        return { backgroundColor: location.pathname == '/registration' ? grey[800] : '' };
+                    }}><PersonAddAltIcon/></IconButton>
+                    <IconButton component={Link} variant='outline' to='/login' edge='end'><LoginIcon /></IconButton>
+                </>
+                }
+            /*themeButton={
                 <IconButton onClick={(e) => {
                     e.preventDefault();
                     
@@ -55,18 +64,22 @@ export default function(){
                 }}>
                     {window.SuperGlobal.darkMode[0] ? <Brightness4 /> : <ModeNight />}
                 </IconButton>
-            }
+            }*/
         >
         
             { <>
+                <Button key={'menu'} component={Link} variant='outline' to='/' sx={() => {
+                    return { backgroundColor: location.pathname == '/' ? grey[800] : '' };
+                }}>Меню</Button>
             {window.SuperGlobal.auth[0] &&
             <>
-                <Button key={'favorites'} component={Link} variant='outline' to='/favorites' sx={() => {
-                    return { backgroundColor: location.pathname == '/favorites' ? grey[800] : '' };
-                }}>Избраное</Button>
-                <Button key={'profile'} component={Link} variant='outline' to='/profile' sx={() => {
-                    return {backgroundColor: location.pathname == '/profile' ? grey[800] : '' };
-                }}>Мой профиль</Button>
+                
+                <Button key={'orders'} component={Link} variant='outline' to='/orders' sx={() => {
+                    return { backgroundColor: location.pathname == '/orders' ? grey[800] : '' };
+                }}>Заказы</Button>
+                <Button key={'basket'} component={Link} variant='outline' to='/basket' sx={() => {
+                    return {backgroundColor: location.pathname == '/basket' ? grey[800] : '' };
+                }}>Корзина</Button>
             </>
             }
             </>}

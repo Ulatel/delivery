@@ -12,6 +12,8 @@ import { BrowserRouter as Router, useRoutes } from 'react-router-dom'
 
 import _ from '../config'
 import "./less/index.less";
+import Dish from "./components/pages/dish";
+import Order from "./components/pages/order";
 
 const pages = (ctx => {
     let keys = ctx.keys();
@@ -22,6 +24,14 @@ const pages = (ctx => {
 window.SuperGlobal = window.SuperGlobal || {};//шлобальное состофяние, например для аутентификации, можно заменить редуксом
 
 $(function(){//сразу после загрузки страницы из-за $
+    $.fn.extend({//для анимации (ставит ксс анимацию в очередь)
+        qcss: function(css) {
+            return $(this).queue(function(next) {
+                $(this).css(css);
+                next();
+            });
+        }
+    });
 
     function App({ }){//начало приложнеия
         window.SuperGlobal.darkMode = useState(localStorage.getItem('theme') ?? false);//состояние темы
@@ -29,15 +39,16 @@ $(function(){//сразу после загрузки страницы из-за
         const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');//спрашивает у браузера
         const theme = React.useMemo(() => createTheme(style(window.SuperGlobal.darkMode[1] || prefersDarkMode)), [prefersDarkMode, window.SuperGlobal.darkMode[0]]);//устанавливает
         
-        window.SuperGlobal.auth = useState(localStorage.getItem('movieToken') ? true : false);//аутентификация
+        //window.SuperGlobal.auth =  useState(true);//аутентификация
+        window.SuperGlobal.auth = useState(localStorage.getItem('dishToken') ? true : false);//аутентификация
         window.SuperGlobal.syncProfile = useState({});
         
         useMemo(() => {
             if (window.SuperGlobal.auth[0]){
-                window.SuperGlobal.token = localStorage.getItem('movieToken');
-                window.SuperGlobal.profile = fetchData(new URL(`/api/account/profile`, _.api_server), {}, 'GET').catch(() => {
+                window.SuperGlobal.token = localStorage.getItem('dishToken');
+                //window.SuperGlobal.profile = fetchData(new URL(`/api/account/profile`, _.api_server), {}, 'GET').catch(() => {
                     //enqueueSnackbar(e.message, { variant: 'error' });
-                });
+                //});
                 
                 (async () => {
                     window.SuperGlobal.syncProfile[1](await window.SuperGlobal.profile);
@@ -64,12 +75,14 @@ $(function(){//сразу после загрузки страницы из-за
                     element: <El.default />,
                 };
             })),
-            // { path: '/movie/:id', element: <Movie/> },//нужны доп аргументы, например id
-            // { path: '/:id', element: <Main /> },
+            // { path: '/dish/:id', element: <Dish/> },//нужны доп аргументы, например id
+            { path: '/?page=:page', element: <Main /> },
+            { path: '/dish/:id', element: <Dish/> },
+            { path: '/order/:id', element: <Order/> },
             { path: '*', element: <NotFound /> },
         ]);
         
-        console.log(theme);
+        //console.log(theme);
         
         return (
             <ThemeProvider theme={theme}>

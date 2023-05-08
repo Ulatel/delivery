@@ -3,7 +3,7 @@ import Hamburger from "./Hamburger";
 import reactWrap from '../utils/react_children_wrap';
 import { AppBar, Toolbar, Box, Grid } from '@mui/material';
 
-export default function({ title, children, logined, loginButton, themeButton }){//заголовок, нужные кнопки
+export default function({ title, children, logined, loginButton, profile, themeButton }){//заголовок, нужные кнопки
     return <>
         <AppBar position='sticky' sx={(theme) => theme.palette.pages.main.Header.bg}>
             <Toolbar>
@@ -18,7 +18,8 @@ export default function({ title, children, logined, loginButton, themeButton }){
                 <Box sx={{ flexGrow: 1 }} />
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     {logined && React.cloneElement(logined, { marginRight: 4 })}
-                    {themeButton}
+                    {/*themeButton*/}
+                    {profile}
                     {loginButton}
                 </Box>
             </Toolbar>
